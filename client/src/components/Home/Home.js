@@ -6,6 +6,7 @@ const Home = () => {
         <div>
             <h1>Welcome to Find My Market!</h1>
             <Link to="/main_map">Main Map</Link>
+            <Link to="/login">LogIn</Link>
         </div>
     );
 };

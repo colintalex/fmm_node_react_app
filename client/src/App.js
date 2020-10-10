@@ -5,6 +5,7 @@ import axios from 'axios'
 import './App.css';
 import MainMap from './components/MainMap/MainMap';
 import Home from './components/Home/Home';
+import SignIn from './components/SignIn/SignIn'
 
 const App = () => {
   const [apiResponse, setApiResponse] = useState([]);
@@ -24,6 +25,9 @@ const App = () => {
       <Switch>
         <Route path="/main_map">
           <MainMap />
+        </Route>
+        <Route path='/login'>
+          <SignIn />
         </Route>
         <Route exact path="/"> {/*Adding the exact path nullifies the default value route, but prevents displaying components that match route*/}
           <Home />
