@@ -11,6 +11,15 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
+    favorites: {
+        type: Array,
+        required: false,
+        default: []
+    },
     date: {
         type: Date,
         default: Date.now
