@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Switch, Route } from "react-router-dom";
 import logo from './logo.svg';
 import axios from 'axios'
 import './App.css';
+import MainMap from './components/MainMap/MainMap';
+import Home from './components/Home/Home';
 
 const App = () => {
   const [apiResponse, setApiResponse] = useState([]);
@@ -17,19 +20,15 @@ const App = () => {
   }, [apiResponse.length]);
   
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="App-intro">{apiResponse}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Route path="/main_map">
+          <MainMap />
+        </Route>
+        <Route exact path="/"> {/*Adding the exact path nullifies the default value route, but prevents displaying components that match route*/}
+          <Home />
+        </Route>
+      </Switch>
     </div>
   );
 }
