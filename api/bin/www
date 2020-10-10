@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');
+var mongoose = require('mongoose');
+require('dotenv/config');
 
 /**
  * Get port from environment and store in Express.
@@ -28,6 +30,18 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+//
+// Connect to DB -imported mongoose and copied over driver based link
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true });
+
+// Pending connection, will notify on success or failure
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error :'));
+db.once('open', () => {
+    console.log('We are connected!')
+});
+
 
 /**
  * Normalize a port into a number, string, or false.
