@@ -1,9 +1,13 @@
 import React from 'react';
+import { BrowserRouter, Link } from "react-router-dom";
 
 const MainMap = () => {
     return (
-        <h1>Main Map Page</h1>
-    )
+        <div>
+            <h1>Main Map Page</h1>
+            <Link to="/">Home</Link>
+        </div>
+    );
 };
 
 export default MainMap
