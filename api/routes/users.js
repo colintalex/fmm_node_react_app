@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 /* GET single user by ID. */
 router.get('/:id', async (req, res) => {
   try {
-  console.log(req.params);
     const user = await User.findById({_id: req.params.id});
     res.json(user);
   } catch (err) {
@@ -37,13 +36,41 @@ router.post('/', async (req, res) => {
 });
 
 /* PATCH current user. */
-router.patch('/:id', function(req, res, next) {
-  res.send('Updated user info');
+router.patch('/:id', async (req, res) => {
+  try{
+    const updatedUser = await User.updateOne(
+      {_id: req.params.id},
+      { $set: { 
+        password: req.body.password ? req.body.password : password,
+        email: req.body.email ? req.body.email : email
+      }}
+    );
+    const user = await User.findById({_id: req.params.id})
+    res.json(user);
+  }catch (err) {
+    res.json({message: err});
+  };
 });
 
 /* DELETE current user. */
-router.delete('/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.delete('/:id', async (req, res) => {
+  try {
+    const removedUser = await User.remove({_id: req.params.id});
+    res.json(removedUser);
+  }catch(err){
+    res.json({message: err});
+  }
 });
 
 module.exports = router;
+
+/*
+Response hash
+{
+    "_id": "5f819cc2cb4718c0bd185465",
+    "email": "colin@me.com",
+    "password": "abcde",
+    "date": "2020-10-10T11:36:34.958Z",
+    "__v": 0
+}
+*/
