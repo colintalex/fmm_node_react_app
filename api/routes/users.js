@@ -38,11 +38,14 @@ router.post('/', async (req, res) => {
 /* PATCH current user. */
 router.patch('/:id', async (req, res) => {
   try{
-    const user = await User.findById({_id: req.params.id})
     const updatedUser = await User.updateOne(
       {_id: req.params.id},
-      { $set: { password: req.body.password, email: req.body.email}}
+      { $set: { 
+        password: req.body.password ? req.body.password : password,
+        email: req.body.email ? req.body.email : email
+      }}
     );
+    const user = await User.findById({_id: req.params.id})
     res.json(user);
   }catch (err) {
     res.json({message: err});
