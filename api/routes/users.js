@@ -5,39 +5,40 @@ var User = require('../models/User');
 
 
 /* GET users listing. */
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  }catch(err){
-    res.json({message: err});
-  };
+router.get('/', (req, res) => {
+  User.find()
+  .then((users) => {
+    res.json(users)})
+  .catch((err) => {
+    res.json({message: err})
+  });
 });
 
 /* GET single user by ID. */
-router.get('/:id', async (req, res) => {
-  try {
-    const user = await User.findById({_id: req.params.id});
-    res.json(user);
-  } catch (err) {
-    res.json({message: err});
-  };
+router.get('/:id', (req, res) => {
+  User.findById({_id: req.params.id})
+  .then((user) => {
+    res.json(user)})
+  .catch ((err) => {
+    res.json({message: err})
+  });
 });
 
 /* POST new user. */
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   const user = new User({ email: req.body.email, password: req.body.password, user_name: req.body.user_name });
-  try {
-      const savedUser = await user.save();
-      res.json(savedUser);
-  }catch(err){
-      res.json({message: err});
-  }
+  user.save()
+  .then((savedUser) => {
+    res.json(savedUser)
+  })
+  .catch((err) => {
+      res.json({message: err})
+  });
 });
 
 /* PATCH single user favorites by ID. */
-router.post('/:id/favorites', async (req, res) => {
-
+// Need to verify FMID somehow, so we don't save random numbers that don't associate
+router.post('/:id/favorites', (req, res) => {
     const user = User.findOne({ _id: req.params.id})
     .then((newUser) => {
       newUser.favorites.push(req.body.favorites);
@@ -49,6 +50,7 @@ router.post('/:id/favorites', async (req, res) => {
 
 /* PATCH current user. */
 router.patch('/:id', async (req, res) => {
+  // Refactor candidate, move into seperate async func, call with .then and .catch
   try{
     const updatedUser = await User.updateOne(
       {_id: req.params.id},
@@ -67,16 +69,18 @@ router.patch('/:id', async (req, res) => {
 });
 
 /* DELETE current user. */
-router.delete('/:id', async (req, res) => {
-  try {
-    const removedUser = await User.remove({_id: req.params.id});
-    res.json(removedUser);
-  }catch(err){
-    res.json({message: err});
+router.delete('/:id/favorites', (req, res) => {
+    User.remove({_id: req.params.id})
+    .then((data) => res.json(data))
+    .catch((err) => res.json({message: err}))
   }
-});
+);
 
 module.exports = router;
+
+/* Delete favorite from current user */
+//Pass in FMID through params
+
 
 /*
 Response hash
