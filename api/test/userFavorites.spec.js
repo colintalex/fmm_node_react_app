@@ -55,7 +55,7 @@ describe('/USERS', function (){
         });
 
         const marketData = {
-            market_fmid: '123456asdh'
+            _id: '5f854213313154530e49859b'
         };
 
         await supertest(app)
