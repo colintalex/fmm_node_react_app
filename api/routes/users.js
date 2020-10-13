@@ -3,6 +3,8 @@ const { response } = require('../app');
 var router = express.Router();
 var User = require('../models/User');
 
+//NOTE -----Learning about putting favorite routes into different file currently
+
 
 /* GET users listing. */
 router.get('/', (req, res) => {
@@ -15,16 +17,17 @@ router.get('/', (req, res) => {
 });
 
 /* GET single user by ID. */
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   User.findById({_id: req.params.id})
   .then((user) => {
     res.json(user)})
   .catch ((err) => {
-    res.json({message: err})
+    return next(err)
   });
 });
 
 /* POST new user. */
+// NOTE - Verify email and password encryption still needed
 router.post('/', (req, res) => {
   const user = new User({ email: req.body.email, password: req.body.password, user_name: req.body.user_name });
   user.save()
@@ -36,59 +39,53 @@ router.post('/', (req, res) => {
   });
 });
 
-/* PATCH single user favorites by ID. */
-// Need to verify FMID somehow, so we don't save random numbers that don't associate
-router.post('/:id/favorites', (req, res) => {
+/* POST New single favorite/s to user. */
+// NOTE----- Need to verify FMID somehow, so we don't save random numbers that don't associate
+router.post('/:id/favorites/:market_fmid', (req, res) => {
     const user = User.findOne({ _id: req.params.id})
     .then((newUser) => {
-      newUser.favorites.push(req.body.favorites);
+      newUser.favorites.push({market_fmid: req.params.market_fmid});
       newUser.save();
       res.send(newUser);
     })
     .catch((err) => res.json(err));
 });
 
-/* PATCH current user. */
-router.patch('/:id', async (req, res) => {
-  // Refactor candidate, move into seperate async func, call with .then and .catch
-  try{
-    const updatedUser = await User.updateOne(
-      {_id: req.params.id},
-      {
-        password: req.body.password ? req.body.password : password,
-        email: req.body.email ? req.body.email : email,
-        user_name: req.body.user_name ? req.body.user_name : user_name
-      }
-    );
-    const user = await User.findById({_id: req.params.id})
-    res.json(user);
-  }catch (err) {
-    console.log(err);
-    res.json({message: err});
-  };
+/* PATCH Update current user attributes. */
+router.patch('/:id', (req, res) => {
+    User.findById({_id: req.params.id})
+    .then((newUser) => {
+      newUser.password = req.body.password ? req.body.password : newUser.password;
+      newUser.email = req.body.email ? req.body.email : newUser.email;
+      newUser.user_name = req.body.user_name ? req.body.user_name : newUser.user_name;
+      newUser.save()
+      res.json(newUser)
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({message: err});
+    });
 });
 
 /* DELETE current user. */
-router.delete('/:id/favorites', (req, res) => {
+router.delete('/:id', (req, res) => {
     User.remove({_id: req.params.id})
-    .then((data) => res.json(data))
+    .then(() => res.json({confirmation: 'Successfully Deleted User'}))
     .catch((err) => res.json({message: err}))
   }
 );
 
-module.exports = router;
-
 /* Delete favorite from current user */
-//Pass in FMID through params
+router.delete('/:id/favorites/:fav_id', (req, res) => {
+    User.findOne({_id: req.params.id})
+    .then((user) => {
+      user.favorites.remove({_id: req.params.fav_id})
+      user.save()
+      res.json(user)
+    })
+    .catch((err) => {
+        res.json(err)
+    })
+});
 
-
-/*
-Response hash
-{
-    "_id": "5f819cc2cb4718c0bd185465",
-    "email": "colin@me.com",
-    "password": "abcde",
-    "date": "2020-10-10T11:36:34.958Z",
-    "__v": 0
-}
-*/
+module.exports = router;
