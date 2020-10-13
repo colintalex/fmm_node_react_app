@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
+    "dev": "nodemon ./bin/www",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "jest": "^26.5.2",
-    "supertest": "^5.0.0"
+    "supertest": "^5.0.0",
+    "nodemon": "^2.0.4"
   }
 }
