@@ -19,32 +19,58 @@ afterEach((done) => {
 	})
 })
 
+describe('/USERS', function (){
+    it("can GET all users", async function() {
+        const user1 = await User.create({
+        "email": "colintalex@gmail.com",
+        "password": "password",
+        "user_name": "colonius_rex",
+        });
+        const user2 = await User.create({
+        "email": "colintalex@gmail.com1",
+        "password": "password1",
+        "user_name": "colonius_rex1"
+        });
 
-it("/USERS endpoint", async function() {
-    const user1 = await User.create({
-    "email": "colintalex@gmail.com",
-    "password": "password",
-    "user_name": "colonius_rex",
-    });
-    const user2 = await User.create({
-    "email": "colintalex@gmail.com1",
-    "password": "password1",
-    "user_name": "colonius_rex1"
+        await supertest(app)
+            .get('/users')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then((res) => {
+                expect(res.body[0]._id).to.equal(user1.id)
+                expect(res.body[0].email).to.equal(user1.email)
+                expect(res.body[0].password).to.equal(user1.password)
+                expect(res.body[0].user_name).to.equal(user1.user_name)
+                expect(res.body[0].favorites).to.be.a('array')
+                expect(res.body[1]._id).to.equal(user2.id)
+                expect(res.body[1].email).to.equal(user2.email)
+                expect(res.body[1].password).to.equal(user2.password)
+                expect(res.body[1].user_name).to.equal(user2.user_name)
+            })
     });
 
-    await supertest(app)
-        .get('/users')
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .then((res) => {
-            expect(res.body[0]._id).to.equal(user1.id)
-            expect(res.body[0].email).to.equal(user1.email)
-            expect(res.body[0].password).to.equal(user1.password)
-            expect(res.body[0].user_name).to.equal(user1.user_name)
-            expect(res.body[0].favorites).to.be.a('array')
-            expect(res.body[1]._id).to.equal(user2.id)
-            expect(res.body[1].email).to.equal(user2.email)
-            expect(res.body[1].password).to.equal(user2.password)
-            expect(res.body[1].user_name).to.equal(user2.user_name)
-        })
-});
+    it("can GET a single user", async function() {
+        const user1 = await User.create({
+        "email": "colintalex@gmail.com",
+        "password": "password",
+        "user_name": "colonius_rex",
+        });
+        const user2 = await User.create({
+        "email": "colintalex@gmail.com1",
+        "password": "password1",
+        "user_name": "colonius_rex1"
+        });
+
+        await supertest(app)
+            .get(`/users/${user1.id}`)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then((res) => {
+                expect(res.body._id).to.equal(user1.id)
+                expect(res.body.email).to.equal(user1.email)
+                expect(res.body.password).to.equal(user1.password)
+                expect(res.body.user_name).to.equal(user1.user_name)
+                expect(res.body.favorites).to.be.a('array')
+            })
+    });
+})
