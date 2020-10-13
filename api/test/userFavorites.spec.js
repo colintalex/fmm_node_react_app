@@ -48,18 +48,16 @@ describe('/USERS', function (){
             "email": "colintalex@gmail.com",
             "password": "password",
             "user_name": "colonius_rex",
-            "favorites": [{
-                market_fmid: '123456asdh',
-                market_fmid: 'asdfgasdg'
-            }]
+            "favorites": [
+                {market_fmid: '123456asdh'},
+                {market_fmid: 'asdfgasdg'}
+            ]
         });
 
-        const marketData = {
-            _id: '5f854213313154530e49859b'
-        };
+     
 
         await supertest(app)
-            .delete(`/users/${user.id}/favorites/${marketData.market_fmid}`)
+            .delete(`/users/${user.id}/favorites/${user.favorites[0].id}`)
             .expect(200)
             .expect('Content-Type', /json/)
             .then((res) => {
