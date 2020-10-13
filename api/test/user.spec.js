@@ -93,6 +93,59 @@ describe('/USERS', function (){
             expect(res.body.user_name).to.equal(userData.user_name)
             expect(res.body.favorites).to.be.a('array')
         })
+    });
 
-    })
+    it('can UPDATE a current user', async function() {
+        const user = await User.create({
+        "email": "colintalex@gmail.com",
+        "password": "password",
+        "user_name": "colonius_rex",
+        });
+        const userData = {
+        "email": "colin@gmail.com",
+        "password": "password-strong",
+        "user_name": "colonius_wrecks",
+        };
+
+        await supertest(app)
+        .patch(`/users/${user.id}`)
+        .send(userData)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then((res) => {
+            expect(res.body._id).to.equal(user.id)
+            expect(res.body.email).to.equal(userData.email)
+            expect(res.body.password).to.equal(userData.password)
+            expect(res.body.user_name).to.equal(userData.user_name)
+            expect(res.body.favorites).to.be.a('array')
+        })
+    });
+
+
+    it("can DELETE a single user", async function() {
+        const user1 = await User.create({
+        "email": "colintalex@gmail.com",
+        "password": "password",
+        "user_name": "colonius_rex",
+        });
+        const user2 = await User.create({
+        "email": "colintalex@gmail.com1",
+        "password": "password1",
+        "user_name": "colonius_rex1"
+        });
+
+        await supertest(app)
+            .delete(`/users/${user1.id}`)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then((res) => {
+                expect(res.body.confirmation).to.equal('Successfully Deleted User')
+            })
+        
+        await User.countDocuments()
+            .then((res) => {
+                expect(res).to.equal(1)
+            });
+    });
+    //'Successfully Deleted User'
 })
