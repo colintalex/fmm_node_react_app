@@ -73,4 +73,26 @@ describe('/USERS', function (){
                 expect(res.body.favorites).to.be.a('array')
             })
     });
+
+    it('can POST a new user', async function() {
+        const userData = {
+        "email": "colintalex@gmail.com",
+        "password": "password",
+        "user_name": "colonius_rex",
+        };
+
+        await supertest(app)
+        .post('/users')
+        .send(userData)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then((res) => {
+            expect(res.body).to.have.property('_id')
+            expect(res.body.email).to.equal(userData.email)
+            expect(res.body.password).to.equal(userData.password)
+            expect(res.body.user_name).to.equal(userData.user_name)
+            expect(res.body.favorites).to.be.a('array')
+        })
+
+    })
 })
