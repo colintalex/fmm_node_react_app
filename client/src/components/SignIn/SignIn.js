@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const SignIn = () => {
+    const [email, setEmail] = useState('')
+
+    const _onChange = (event) => {
+        setEmail(event.target.value)
+        console.log(event.target.value)
+    }
+
     return (
         <div className="sign-in-page">
             <div>
@@ -10,7 +17,7 @@ const SignIn = () => {
                 <form>
                     <label for="fname">E-mail:</label>
                     <br />
-                    <input type="text" id="fname" name="fname"></input>
+                    <input type="text" id="fname" name="fname" onChange={_onChange}></input>
                     <br />
                     <label for="lname">Password</label>
                     <br />
