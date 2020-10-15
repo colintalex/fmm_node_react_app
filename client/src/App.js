@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import './App.css';
-import GoogleApiWrapper from './components/MainMap/MainMap';
+import MainMap from './components/MainMap/MainMap';
 import Home from './components/Home/Home';
 import SignIn from './components/SignIn/SignIn'
 
@@ -10,7 +10,7 @@ const App = () => {
   return (
         <Switch>
           <Route path="/main_map">
-            <GoogleApiWrapper />
+            <MainMap />
           </Route>
           <Route path='/login'>
             <SignIn />

@@ -3,22 +3,20 @@ import GoogleMap from 'google-map-react'
 import Sidebar from 'react-sidebar';
 import axios from 'axios'
 import styled from 'styled-components'
+import Marker from './Marker'
+import DetailPane from './DetailPane'
+import SearchWrapper from './SearchWrapper'
 
 const MapWrapper = styled.div`
-    height: 80vh;
+    height: 75vh;
     width: 100%;
 `
 
-const Marker = styled.div`
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top: -40px;
-    left: -15px;
-
+const WindowWrapper = styled.div`
+    height: 100vh;
+    width: 100%;
+    background: #fff;
 `
-
-
 
 const MainMap = () => {
     const [center, setCenter] = useState({lat: 39.741667, lng: -104.978649});
@@ -27,6 +25,10 @@ const MainMap = () => {
     const [markets, setMarkets] = useState([]);
     const [zoom, setZoom] = useState(11);
     const [marks, setMarks] = useState([]);
+    const [currentMarker, setCurrentMarker] = useState();
+    const [currentMarket, setCurrentMarket] = useState();
+    const [searchDate, setSearchDate] = useState('');
+    const [searchProducts, setSearchProducts] = useState([]);
 
     useEffect(() => {
         axios.post("http://localhost:5000/", {
@@ -37,6 +39,7 @@ const MainMap = () => {
         query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!] $date: String!){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products, date: $date ) { 
                 location 
                 markets {
+                id
                 fmid 
                 marketname
                 latitude
@@ -58,70 +61,112 @@ const MainMap = () => {
             lat: lat,
             lng: lng,
             radius: (200),
-            products: [],
-            date: ""
+            products: searchProducts,
+            date: searchDate
         }
         })
         .then(resp => {
             setMarkets(resp.data.data.marketsByCoords.markets);
-            // setLocation(resp.data.data.marketsByCoords.location);
         })
         .catch(err => console.log(err))
 
     }, [center, lat, lng, zoom]);
 
     useEffect(() => {
-        setMarks(markets.map((market) => {
-            const { latitude, longitude, fmid } = market;
-
+        const newMarks = markets.map((market) => {
+            const { latitude, longitude, fmid, id } = market;
             return (
-                <Marker key={fmid} lat={latitude} lng={longitude}>
-                    <img height='40px' src='https://raw.githubusercontent.com/tylerpporter/find_my_market_fe/master/assets/FMM_icon_no_border.png'/>
-                </Marker>
+                <Marker 
+                    key={id}
+                    lat={latitude}
+                    lng={longitude}
+                    zIndex={1}
+                    onClick={() => {
+                        getMarketData(id)
+                    }}
+                />
             )
-        }))
-    }, [center, markets])
+        });
+        setMarks(newMarks);
+    }, [center, markets]);
 
+    useEffect(() => {
+        axios.post("http://localhost:5000/", {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        },
+        query: `query Market($id: Int!) { 
+                market(id: $id) {
+                    fmid 
+                    marketname
+                    latitude
+                    longitude
+                    website
+                    seasonDates
+                    street
+                    city
+                    state
+                    zip
+                    products {
+                        name
+                    }
+                }
+        }`,
+        variables: {
+            id: parseInt(currentMarker)
+        }
+        })
+        .then(resp => {
+            setCurrentMarket(resp.data.data.market)
+        })
+        .catch(err => console.log(err))
+    },[currentMarker]);
+
+    const getMarketData = ((data) => {
+        setCurrentMarker(data)
+        console.log(data)
+    })
 
     const _onChange = ((data) => {
-        console.log(data.center);
         setCenter(data.center);
         setLat(data.center.lat);
         setLng(data.center.lng);
         setZoom(data.zoom)
     });
 
-    const _onChildMouseEnter = ((data) => {
-        console.log('enter')
-        console.log(data)
+    const _onChildClick = ((key, childProps) => {
+        childProps.onClick()
     })
 
-    const _onChildMouseLeave = ((data) => {
-        console.log('leave')
-        console.log(data)
-    })
+    const handleApiLoaded = (map, maps) => {
+
+    };
+
+    const OPTIONS = {
+        minZoom: 10,
+        maxZoom: 17,
+    }
 
     return (
-        <div>
-            <Sidebar
-                sidebar={<b>Login to view favorites</b>}
-                docked={true}
-                styles={{ sidebar: { background: "white" } }}
-                children=''
-            />
+        <WindowWrapper>
             <MapWrapper>
+                <SearchWrapper />
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
                 zoom={zoom}
+                options={OPTIONS}
+                yesIWantToUseGoogleMapApiInternals
                 onChange={_onChange}
-                onChildMouseEnter={_onChildMouseEnter}
-                onChildMouseLeave={_onChildMouseLeave}
+                onChildClick={_onChildClick}
                 >
                     {marks}
                 </GoogleMap>
             </MapWrapper>
-        </div>    
+            <DetailPane 
+                currentMarket={currentMarket}/>
+        </WindowWrapper>    
     );
 }
 
