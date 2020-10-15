@@ -4,6 +4,7 @@ import './App.css';
 import MainMap from './components/MainMap/MainMap';
 import Home from './components/Home/Home';
 import SignIn from './components/SignIn/SignIn'
+import Register from './components/Register/Register'
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
             <SignIn />
           </Route>
           <Route path='/register'>
-            <SignIn />
+            <Register />
           </Route>
           <Route exact path="/"> {/*Adding the exact path nullifies the default value route, but prevents displaying components that match route*/}
             <Home />
