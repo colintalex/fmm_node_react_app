@@ -6,6 +6,8 @@ import styled from 'styled-components'
 import Marker from './Marker'
 import DetailPane from './DetailPane'
 import SearchWrapper from './SearchWrapper'
+import { useLocation } from 'react-router-dom'
+import UserDetailPane from './UserDetailPane';
 
 const MapWrapper = styled.div`
     height: 75vh;
@@ -29,6 +31,12 @@ const MainMap = () => {
     const [currentMarket, setCurrentMarket] = useState();
     const [searchDate, setSearchDate] = useState('');
     const [searchProducts, setSearchProducts] = useState([]);
+    const [currentUser, setCurrentUser] = useState({});
+    const location = useLocation();
+
+    useEffect(() => {
+       setCurrentUser(location.state.data); // result: 'some_value'
+    }, [location]);
 
     useEffect(() => {
         axios.post("http://localhost:5000/", {
@@ -165,7 +173,11 @@ const MainMap = () => {
                 </GoogleMap>
             </MapWrapper>
             <DetailPane 
-                currentMarket={currentMarket}/>
+                currentMarket={currentMarket}
+            />
+            <UserDetailPane
+                currentUser={currentUser}
+            />
         </WindowWrapper>    
     );
 }
