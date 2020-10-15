@@ -5,9 +5,10 @@ import axios from 'axios'
 import styled from 'styled-components'
 import Marker from './Marker'
 import DetailPane from './DetailPane'
+import SearchWrapper from './SearchWrapper'
 
 const MapWrapper = styled.div`
-    height: 80vh;
+    height: 75vh;
     width: 100%;
 `
 
@@ -150,6 +151,7 @@ const MainMap = () => {
     return (
         <WindowWrapper>
             <MapWrapper>
+                <SearchWrapper />
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
