@@ -3,8 +3,6 @@ import GoogleMap from 'google-map-react'
 import Sidebar from 'react-sidebar';
 import axios from 'axios'
 import styled from 'styled-components'
-import shouldPureComponentUpdate from 'react-pure-render/function';
-import { Redirect } from 'react-router-dom';
 
 const MapWrapper = styled.div`
     height: 80vh;
@@ -12,28 +10,14 @@ const MapWrapper = styled.div`
 `
 
 const Marker = styled.div`
-    position: 'absolute',
-    width: 20px;
-    height: 20px;
-    top: 20px;
-    left: 20px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: -40px;
+    left: -15px;
 
-    border: '5px solid #f44336';
-    borderRadius: 1px;
-    backgroundColor: 'white';
-    textAlign: 'center';
-    color: '#3f51b5';
-    fontSize: 16;
-    fontWeight: 'bold';
-    padding: 4;
 `
-const MyGreatPlace = (props) => {
-    return (
-        <Marker>
-            
-        </Marker>
-    );
-}
+
 
 
 const MainMap = () => {
@@ -73,7 +57,7 @@ const MainMap = () => {
         variables: {
             lat: lat,
             lng: lng,
-            radius: 50,
+            radius: (200),
             products: [],
             date: ""
         }
@@ -83,37 +67,56 @@ const MainMap = () => {
             // setLocation(resp.data.data.marketsByCoords.location);
         })
         .catch(err => console.log(err))
-    }, [lat, lng]);
+
+    }, [center, lat, lng, zoom]);
 
     useEffect(() => {
         setMarks(markets.map((market) => {
             const { latitude, longitude, fmid } = market;
 
             return (
-                <div key={fmid} lat={latitude} lng={longitude} style={{color: 'red', height: '20px', backgroundColor: 'red', width: '20px',}}/>
+                <Marker key={fmid} lat={latitude} lng={longitude}>
+                    <img height='40px' src='https://raw.githubusercontent.com/tylerpporter/find_my_market_fe/master/assets/FMM_icon_no_border.png'/>
+                </Marker>
             )
         }))
-    }, [markets]);
+    }, [center, markets])
+
 
     const _onChange = ((data) => {
+        console.log(data.center);
         setCenter(data.center);
         setLat(data.center.lat);
         setLng(data.center.lng);
+        setZoom(data.zoom)
     });
+
+    const _onChildMouseEnter = ((data) => {
+        console.log('enter')
+        console.log(data)
+    })
+
+    const _onChildMouseLeave = ((data) => {
+        console.log('leave')
+        console.log(data)
+    })
 
     return (
         <div>
             <Sidebar
                 sidebar={<b>Login to view favorites</b>}
-                docked='true'
+                docked={true}
                 styles={{ sidebar: { background: "white" } }}
+                children=''
             />
             <MapWrapper>
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
-                defaultZoom={zoom}
+                zoom={zoom}
                 onChange={_onChange}
+                onChildMouseEnter={_onChildMouseEnter}
+                onChildMouseLeave={_onChildMouseLeave}
                 >
                     {marks}
                 </GoogleMap>
