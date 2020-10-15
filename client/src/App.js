@@ -15,6 +15,9 @@ const App = () => {
           <Route path='/login'>
             <SignIn />
           </Route>
+          <Route path='/register'>
+            <SignIn />
+          </Route>
           <Route exact path="/"> {/*Adding the exact path nullifies the default value route, but prevents displaying components that match route*/}
             <Home />
           </Route>

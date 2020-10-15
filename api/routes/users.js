@@ -28,7 +28,8 @@ router.get('/:id', (req, res, next) => {
 
 /* POST new user. */
 // NOTE - Verify email and password encryption still needed
-router.post('/', (req, res) => {
+router.post('/register', (req, res) => {
+
   const user = new User({ email: req.body.email, password: req.body.password, user_name: req.body.user_name });
   user.save()
   .then((savedUser) => {
