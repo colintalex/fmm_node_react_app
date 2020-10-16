@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
                 if(err) throw err;
                 res.json({
                     user: {
+                    id: user._id,
                     user_name: user.user_name,
                     email: user.email,
                     favorites: user.favorites
