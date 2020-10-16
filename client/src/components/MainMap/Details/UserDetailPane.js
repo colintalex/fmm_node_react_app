@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
+import UserFavoritesDetail from './UserFavoritesDetail'
 
 const StyledUserDetailPane = styled.div`
     height: auto;
@@ -17,13 +17,16 @@ const StyledUserDetailPane = styled.div`
 
 `
 
-const UserDetailPane = ((props) => {
-    const user = props.currentUser
+const UserDetailPane = (({currentUser, handleUser}) => {
+    const user = currentUser.user
     if(user){
         return (
             <StyledUserDetailPane>
-                Current User: {props.currentUser.user_name}<br/>
-                Favorites: {props.currentUser.favorites}
+                Current User: {user.user_name}<br/>
+                <UserFavoritesDetail 
+                    className='favorites-grid' 
+                    user={user}
+                />
             </StyledUserDetailPane>
         )
     }else{
