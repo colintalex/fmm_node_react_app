@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form';
 import Geocode from 'react-geocode'
+require('dotenv/config');
 
 
-Geocode.setApiKey(process.env.GOOGLE_API_KEY)
+
+Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
 const SearchBar = styled.div`
     position: fixed;
@@ -40,7 +42,8 @@ const StyledSubmit = styled.button`
     height: 30px;
     opacity: 95%;
     font-size: 18px;
-    background-color: #ef8275;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
     border: 3px solid #38A3A5;
     border-radius: 20px;
     margin-left: 5px;
@@ -54,6 +57,7 @@ const SearchWrapper = (({onSearchChange}) => {
     const _onSubmit = (e) => {
         Geocode.fromAddress(e.location)
         .then(resp => {
+            console.log(resp.results[0].geometry.location)
             onSearchChange(resp.results[0].geometry.location)
         })
         .catch(err => console.log('err', err))

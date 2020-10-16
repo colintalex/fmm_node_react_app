@@ -8,7 +8,8 @@ const StyledUserDetailPane = styled.div`
     width: 40vw;
     margin-right: auto;
     padding: 20px 10px;
-    background-color: #38A3A5;
+    background: rgb(56,163,165);
+    background: linear-gradient(0deg, rgba(56,163,165,1) 0%, rgba(61,178,180,1) 100%);
     margin: 15px;
     border-radius: 20px;
     border: 1px solid #888;
