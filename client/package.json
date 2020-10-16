@@ -11,6 +11,7 @@
     "google-map-react": "^2.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-geocode": "^0.2.2",
     "react-google-maps": "^9.4.5",
     "react-hook-form": "^6.9.2",
     "react-pure-render": "^1.0.2",
