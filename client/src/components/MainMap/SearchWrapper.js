@@ -6,7 +6,7 @@ require('dotenv/config');
 
 
 
-Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
+Geocode.setApiKey(process.env.GOOGLE_API_KEY)
 
 const SearchBar = styled.div`
     position: fixed;

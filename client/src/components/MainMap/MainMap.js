@@ -159,6 +159,7 @@ const MainMap = () => {
         maxZoom: 17,
     }
 
+
     const handleUser = (data) => {
          var headers = {
             'Content-Type': 'application/json',
@@ -174,6 +175,7 @@ const MainMap = () => {
     }
 
     console.log('center:', center)
+
     return (
         <WindowWrapper>
             <MapWrapper>
@@ -189,6 +191,18 @@ const MainMap = () => {
                 >
                     {marks}
                 </GoogleMap>
+                <Sidebar
+                    sidebar={<button onClick={() => setSidebarOpen(false)}>
+                    Close sidebar
+                    </button>}
+                    open={sidebarOpen}
+                    onSetOpen={false}
+                    styles={{ sidebar: { background: "white" } }}
+                >
+                    <button onClick={() => setSidebarOpen(true)}>
+                    Open sidebar
+                    </button>
+                </Sidebar>
             </MapWrapper>
             <DetailPane 
                 currentMarket={currentMarket}
