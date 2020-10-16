@@ -1,12 +1,46 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const FavoriteSchema = new Schema({
-    //title: String,
-    market_fmid: {
+const ProductSchema = new Schema({
+    name: {
         type: String,
         required: true
     }
+})
+
+const FavoriteSchema = new Schema({
+    // products {
+    //     name
+    // }
+    market_fmid: {
+        type: String,
+        required: true
+    },
+    marketname: {
+        type: String
+    },
+    latitude: {
+        type: String
+    },
+    longitude: {
+        type: String
+    },
+    seasonDates: {
+        type: String
+    },
+    street: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    state: {
+        type: String
+    },
+    zip: {
+        type: String
+    },
+    products: [ProductSchema]
 
 });
 
