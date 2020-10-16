@@ -160,7 +160,7 @@ const MainMap = () => {
         maxZoom: 17,
     }
 
-    console.log('center:', center)
+    const [sidebarOpen, setSidebarOpen] = useState(false)
     return (
         <WindowWrapper>
             <MapWrapper>
@@ -176,6 +176,18 @@ const MainMap = () => {
                 >
                     {marks}
                 </GoogleMap>
+                <Sidebar
+                    sidebar={<button onClick={() => setSidebarOpen(false)}>
+                    Close sidebar
+                    </button>}
+                    open={sidebarOpen}
+                    onSetOpen={false}
+                    styles={{ sidebar: { background: "white" } }}
+                >
+                    <button onClick={() => setSidebarOpen(true)}>
+                    Open sidebar
+                    </button>
+                </Sidebar>
             </MapWrapper>
             <DetailPane 
                 currentMarket={currentMarket}
