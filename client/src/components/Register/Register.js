@@ -24,7 +24,7 @@ const Register = (() => {
 
     
     const _onSubmit = ((data) => {
-        axios.post('http://localhost:4000/users/register', data)
+        axios.post('http://localhost:5000/users/register', data)
             .then((res) => {
                 history.push('/main_map', {data: res.data})
             })

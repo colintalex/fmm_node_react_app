@@ -4,13 +4,14 @@ import Sidebar from 'react-sidebar';
 import axios from 'axios'
 import styled from 'styled-components'
 import Marker from './Marker'
-import DetailPane from './DetailPane'
+import DetailPane from './Details/DetailPane'
 import SearchWrapper from './SearchWrapper'
 import { useLocation } from 'react-router-dom'
 
 const MapWrapper = styled.div`
     height: 75vh;
     width: 100%;
+    border: 1px solid black;
 `
 
 const WindowWrapper = styled.div`
@@ -36,13 +37,12 @@ const MainMap = () => {
 
     useEffect(() => {
         if(location.state){
-            setCurrentUser(location.state.data.user); // result: 'some_value'
-            setUserToken(location.state.data.token);
+            setCurrentUser(location.state.data); // result: 'some_value'
         }
     }, [location]);
 
     useEffect(() => {
-        axios.post("http://localhost:5000/", {
+        axios.post("http://localhost:4000/", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const MainMap = () => {
         })
         .catch(err => console.log(err))
 
-    }, [center, lat, lng, zoom]);
+    }, [lat, lng]);
 
     useEffect(() => {
         const newMarks = markets.map((market) => {
@@ -99,10 +99,10 @@ const MainMap = () => {
             )
         });
         setMarks(newMarks);
-    }, [center, markets]);
+    }, [markets]);
 
     useEffect(() => {
-        axios.post("http://localhost:5000/", {
+        axios.post("http://localhost:4000/", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ const MainMap = () => {
             if(market) setCurrentMarket(market)
         })
         .catch(err => console.log(err))
-    },[currentMarker]);
+    }, [currentMarker]);
 
     const getMarketData = ((data) => {
         setCurrentMarker(data)
@@ -159,10 +159,25 @@ const MainMap = () => {
         maxZoom: 17,
     }
 
+    const handleUser = (data) => {
+         var headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token': data.currentUser.token
+        }
+        axios.post(`http://localhost:5000/users/${data.currentUser.user.id}/favorites/${data.currentMarket.fmid}`, data.currentMarket, {headers: headers})
+        .then(res => {
+            setCurrentUser(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    console.log('center:', center)
     return (
         <WindowWrapper>
             <MapWrapper>
-                <SearchWrapper />
+                <SearchWrapper onSearchChange={setCenter}/>
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
@@ -178,6 +193,7 @@ const MainMap = () => {
             <DetailPane 
                 currentMarket={currentMarket}
                 currentUser={currentUser}
+                handleUser={handleUser}
             />
         </WindowWrapper>    
     );
