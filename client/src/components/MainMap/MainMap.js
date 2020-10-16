@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 const MapWrapper = styled.div`
     height: 75vh;
     width: 100%;
+    border: 1px solid black;
 `
 
 const WindowWrapper = styled.div`
@@ -81,7 +82,7 @@ const MainMap = () => {
         })
         .catch(err => console.log(err))
 
-    }, [center, lat, lng, zoom]);
+    }, [lat, lng]);
 
     useEffect(() => {
         const newMarks = markets.map((market) => {
@@ -99,7 +100,7 @@ const MainMap = () => {
             )
         });
         setMarks(newMarks);
-    }, [center, markets]);
+    }, [markets]);
 
     useEffect(() => {
         axios.post("http://localhost:5000/", {
@@ -159,10 +160,11 @@ const MainMap = () => {
         maxZoom: 17,
     }
 
+    console.log('center:', center)
     return (
         <WindowWrapper>
             <MapWrapper>
-                <SearchWrapper />
+                <SearchWrapper onSearchChange={setCenter}/>
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}

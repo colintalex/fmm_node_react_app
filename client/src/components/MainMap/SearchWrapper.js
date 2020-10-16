@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useForm } from 'react-hook-form';
+import Geocode from 'react-geocode'
+
+
+Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
 const SearchBar = styled.div`
     position: fixed;
@@ -30,15 +35,27 @@ const StyledSubmit = styled.button`
     opacity: 85%;
 `
 
-const SearchWrapper = (() => {
+const SearchWrapper = (({onSearchChange}) => {
+    const { register, handleSubmit, errors} = useForm();
     const [search, setSearch] = useState('')
+
+
+    const _onSubmit = (e) => {
+        Geocode.fromAddress(e.location)
+        .then(resp => {
+            onSearchChange(resp.results[0].geometry.location)
+        })
+        .catch(err => console.log('err', err))
+    }
 
     return(
         <SearchBar>
-            <form>
+            <form onSubmit={handleSubmit(_onSubmit)}>
                 <StyledInput type='text' 
-                    onChange={(event) => setSearch(event.target.value)}
-                    placeholder='Search by City or State'    
+                    onChange={(event) => onSearchChange(event.target.value)}
+                    placeholder='Search by City or State' 
+                    ref={register}
+                    name='location'   
                 ></StyledInput>
                 <StyledSubmit type='submit'>Search</StyledSubmit>
             </form>
