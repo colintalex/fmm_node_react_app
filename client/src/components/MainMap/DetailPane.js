@@ -21,6 +21,10 @@ const StyledDetailPane = styled.div`
     width: 100%;
     height: 22%;
     background-color: #ef8275;
+
+    h3, h4, h5{
+        margin: 8px;
+    }
 `
 
 const DetailPane = ((params) => {
@@ -32,6 +36,7 @@ const DetailPane = ((params) => {
                     <h4>{params.currentMarket.street}<br/>{params.currentMarket.city}, {params.currentMarket.state}</h4>
                     <h5>{params.currentMarket.seasonDates}</h5>
                     <a href={params.currentMarket.website}>Website</a>
+                    <p>Placeholder for More Info Modal</p>
                 </StyledDetailPane>
                 <UserDetailPane 
                     currentUser={params.currentUser}
