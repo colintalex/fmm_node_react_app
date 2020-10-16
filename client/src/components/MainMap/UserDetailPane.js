@@ -5,11 +5,15 @@ import styled from 'styled-components'
 
 const StyledUserDetailPane = styled.div`
     height: auto;
+    width: 40vw;
+    margin-right: auto;
     padding: 20px 10px;
     background-color: #38A3A5;
-    margin: 10px;
+    margin: 15px;
     border-radius: 20px;
-    box-shadow: 1px 4px 8px black;
+    border: 1px solid #888;
+    box-shadow: 2px 4px 10px #333;
+
 `
 
 const UserDetailPane = ((props) => {
