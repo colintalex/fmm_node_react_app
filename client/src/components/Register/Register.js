@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import useRegisterUser from '../../api_requests/useRegisterUser'
 
 const StyledForm = styled.form`
     display: block;

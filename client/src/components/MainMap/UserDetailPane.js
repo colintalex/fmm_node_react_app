@@ -33,3 +33,5 @@ const UserDetailPane = ((props) => {
 });
 
 export default UserDetailPane;
+
+// NOTE-- Add logout button
