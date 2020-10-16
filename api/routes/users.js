@@ -54,6 +54,7 @@ router.post('/register', (req, res) => {
               if(err) throw err;
               res.json({
                 user: {
+                  id: savedUser._id,
                   user_name: savedUser.user_name,
                   email: savedUser.email,
                   favorites: savedUser.favorites
@@ -74,9 +75,24 @@ router.post('/register', (req, res) => {
 router.post('/:id/favorites/:market_fmid', auth, (req, res) => {
     const user = User.findOne({ _id: req.params.id})
     .then((newUser) => {
-      newUser.favorites.push({market_fmid: req.params.market_fmid});
-      newUser.save();
-      res.send(newUser);
+      newUser.favorites.push({market_fmid: req.params.market_fmid})
+      newUser.save()
+        jwt.sign(
+            {id: newUser.id},
+            process.env.JWT_SECRET,
+            { expiresIn: 3600 }, (err, token) => {
+              if(err) throw err;
+              res.json({
+                user: {
+                  id: newUser._id,
+                  user_name: newUser.user_name,
+                  email: newUser.email,
+                  favorites: newUser.favorites
+                }, token: token
+              })
+
+            }
+          )
     })
     .catch((err) => res.json(err));
 });
