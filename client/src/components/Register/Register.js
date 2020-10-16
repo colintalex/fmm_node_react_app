@@ -2,16 +2,25 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom'
-import useUserPost from '../../api_requests/useUserPost'
+import styled from 'styled-components'
+import useRegisterUser from '../../api_requests/useRegisterUser'
+
+const StyledForm = styled.form`
+    display: block;
+`
+const StyledFormWrapper = styled.div`
+    padding: 20px;
+`
+
+const StyledInputs = styled.input`
+    margin: 10px;
+`
 
 const Register = (() => {
-    // const [username, setUsername] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [password2, setPassword2] = useState('');
     const { register, handleSubmit, errors} = useForm();
     const [currentUser, setCurrentUser] = useState({});
     const history = useHistory();
+    const [errorMsg, setErrorMsg] = useState()
     
 
     
@@ -20,41 +29,42 @@ const Register = (() => {
             .then((res) => {
                 history.push('/main_map', {data: res.data})
             })
-            .catch((error) => console.log(error))
-            console.log('done')
-            
+            .catch((error) => {
+                setErrorMsg(error.response.data.error)
+            })
     })
 
     return(
-        <div>
-            <form onSubmit={handleSubmit(_onSubmit)}>
-                <input
+        <StyledFormWrapper>
+            <StyledForm onSubmit={handleSubmit(_onSubmit)}>
+                <StyledInputs
                     placeholder='Username'
                     type='text'
                     ref={register}
                     name='user_name'
-                />
-                <input
+                /><br />
+                <StyledInputs
                     placeholder='Email'
                     type='text'
                     ref={register}
                     name='email'
-                />
-                <input
+                /><br />
+                <StyledInputs
                     placeholder='Password'
-                    type='text'
+                    type='password'
                     ref={register}
                     name='password'
-                />
-                <input
+                /><br/>
+                <StyledInputs
                     placeholder='Confirm Password'
-                    type='text'
+                    type='password'
                     ref={register}
                     name='password2'
                 />
                 <input type='submit' />
-            </form>
-        </div>
+            </StyledForm>
+            {errorMsg && <h3>{errorMsg}</h3>}
+        </StyledFormWrapper>
     )
 });
 
