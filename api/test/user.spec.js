@@ -82,7 +82,7 @@ describe('/USERS', function (){
         };
 
         await supertest(app)
-        .post('/users')
+        .post('/users/register')
         .send(userData)
         .expect(200)
         .expect('Content-Type', /json/)

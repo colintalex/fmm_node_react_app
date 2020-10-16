@@ -5,6 +5,7 @@ const SearchBar = styled.div`
     position: fixed;
     display: block;
     width: 40%;
+    height: 30px;
     top: 0;
     left: 0;
     right: 0;
