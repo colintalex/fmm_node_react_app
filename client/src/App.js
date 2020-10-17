@@ -19,7 +19,7 @@ const App = () => {
     sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
   }, [currentUser]);
 
-  const handleSignIn = (data) => {
+  const handleAuthentication = (data) => {
       axios.post('http://localhost:5000/auth', data)
       .then(res => {
       setCurrentUser(res.data)
@@ -65,7 +65,7 @@ const App = () => {
           <Route path='/login'>
             <SignIn 
               currentUser={currentUser}
-              handleSignIn={handleSignIn}
+              handleAuthentication={handleAuthentication}
             />
           </Route>
           <Route path='/register'>
