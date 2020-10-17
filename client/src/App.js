@@ -9,14 +9,14 @@ import Register from './components/Register/Register'
 
 const App = () => {
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('currentUser')) || '');
 
   // var headers = {
   //     'Content-Type': 'application/json',
   //     'x-auth-token': data.currentUser.token
   // }
   useEffect(() => {
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
   }, [currentUser]);
 
   const handleSignIn = (data) => {
