@@ -31,7 +31,7 @@ const FavDiv = styled.div`
 `
 // NOTE-- Add custom icons for types of products
 
-const DetailPane = (({currentMarket, currentUser, handleUser}) => {
+const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUser }) => {
     const detailUser = currentUser
     const _onSubmit = ((data) => {
       
@@ -42,7 +42,7 @@ const DetailPane = (({currentMarket, currentUser, handleUser}) => {
             <MarketDetailPane
                 currentMarket={currentMarket}
                 currentUser={currentUser}
-                handleUser={handleUser}
+                handleUserFavorites={handleUserFavorites}
             />
             <UserDetailPane 
                 currentUser={currentUser}

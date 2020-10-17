@@ -1,43 +1,32 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom'
 
-const SignIn = (() => {
-    const { register, handleSubmit, errors} = useForm();
+const SignIn = (({ currentUser, handleSignIn }) => {
     const history = useHistory();
-    const [email, setEmail] = useState('')
+    const { register, handleSubmit, errors} = useForm();
     const [errorMsg, setErrorMsg] = useState()
 
-    const _onChange = (event) => {
-        setEmail(event.target.value)
-        console.log(event.target.value)
-    }
-    const _onSubmit = ((data) => {
-        console.log(data)
-        axios.post('http://localhost:5000/auth', data)
-            .then((res) => {
-                history.push('/main_map', {data: res.data})
-            })
-            .catch((error) => {
-                setErrorMsg(error.response.data.error)
-            })
+    const _handleSignInRedirect = ((data) => {
+        handleSignIn(data)
+        history.push('/main_map')
     })
 
     return (
         <div className="sign-in-page">
-            <form onSubmit={handleSubmit(_onSubmit)}>
-                <label for="email">E-mail:</label>
+            <form onSubmit={handleSubmit(_handleSignInRedirect)}>
+                <label for="email">E-mail</label>
                 <br />
                 <input type="text" name="email" ref={register}></input>
                 <br />
                 <label for="password">Password</label>
                 <br />
-                <input type="password" name="password" ref={register}></input>
+                <input type="current-password" name="password" ref={register}></input>
                 <br />
                 <input type="submit" text='Submit' />
             </form>
-            {errorMsg && <h3>{errorMsg}</h3>}
+            {/* {errorMsg && <h3>{errorMsg}</h3>} */}
         </div>
     );
 });
