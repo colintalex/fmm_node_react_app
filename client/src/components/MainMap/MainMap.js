@@ -7,6 +7,10 @@ import Marker from './Marker'
 import DetailPane from './Details/DetailPane'
 import SearchWrapper from './SearchWrapper'
 import { useLocation, useHistory } from 'react-router-dom'
+import Geocode from 'react-geocode'
+import { debug } from 'dotenv/lib/env-options';
+require('dotenv/config');
+Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
 const MapWrapper = styled.div`
     height: 75vh;
@@ -76,17 +80,16 @@ const MainMap = ({ currentUser, handleUserFavorites }) => {
         })
         .catch(err => console.log(err))
 
-    }, [lat, lng]);
+    }, [center]);
 
     useEffect(() => {
         const newMarks = markets.map((market) => {
             const { latitude, longitude, fmid, id } = market;
             return (
                 <Marker 
-                    key={id}
+                    id={id}
                     lat={latitude}
                     lng={longitude}
-                    zIndex={1}
                     onClick={() => {
                         handleMarkerClick(id)
                     }}
@@ -150,13 +153,19 @@ const MainMap = ({ currentUser, handleUserFavorites }) => {
         maxZoom: 17,
     }
 
-
+    const handleSearch = (data) => {
+        Geocode.fromAddress(data.location)
+        .then(resp => {
+            setCenter(resp.results[0].geometry.location)
+        })
+        .catch(err => console.log('err', err))
+    }
 
     const [error, setError] = useState()
     return (
         <WindowWrapper>
             <MapWrapper>
-                <SearchWrapper onSearchChange={setCenter}/>
+                <SearchWrapper handleSearch={handleSearch}/>
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
