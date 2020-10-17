@@ -16,7 +16,7 @@ const SignIn = (({ currentUser, handleSignIn }) => {
     return (
         <div className="sign-in-page">
             <form onSubmit={handleSubmit(_handleSignInRedirect)}>
-                <label for="email">E-mail</label>
+                <label for="email" >E-mail</label>
                 <br />
                 <input type="text" name="email" ref={register}></input>
                 <br />
