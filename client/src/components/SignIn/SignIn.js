@@ -3,19 +3,19 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom'
 
-const SignIn = (({ currentUser, handleSignIn }) => {
+const SignIn = (({ currentUser, handleAuthentication }) => {
     const history = useHistory();
     const { register, handleSubmit, errors} = useForm();
     const [errorMsg, setErrorMsg] = useState()
 
-    const _handleSignInRedirect = ((data) => {
-        handleSignIn(data)
+    const _handleAuthenticationRedirect = ((data) => {
+        handleAuthentication(data)
         history.push('/main_map')
     })
 
     return (
         <div className="sign-in-page">
-            <form onSubmit={handleSubmit(_handleSignInRedirect)}>
+            <form onSubmit={handleSubmit(_handleAuthenticationRedirect)}>
                 <label for="email" >E-mail</label>
                 <br />
                 <input type="text" name="email" ref={register}></input>
