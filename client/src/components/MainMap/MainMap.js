@@ -6,7 +6,11 @@ import styled from 'styled-components'
 import Marker from './Marker'
 import DetailPane from './Details/DetailPane'
 import SearchWrapper from './SearchWrapper'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
+import Geocode from 'react-geocode'
+import { debug } from 'dotenv/lib/env-options';
+require('dotenv/config');
+Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
 const MapWrapper = styled.div`
     height: 75vh;
@@ -20,7 +24,8 @@ const WindowWrapper = styled.div`
     background: #fff;
 `
 
-const MainMap = () => {
+const MainMap = ({ currentUser, handleUserFavorites }) => {
+    const history = useHistory();
     const [center, setCenter] = useState({lat: 39.741667, lng: -104.978649});
     const [lat, setLat] = useState(39.741667);
     const [lng, setLng] = useState(-104.978649);
@@ -31,15 +36,9 @@ const MainMap = () => {
     const [currentMarket, setCurrentMarket] = useState();
     const [searchDate, setSearchDate] = useState('');
     const [searchProducts, setSearchProducts] = useState([]);
-    const [currentUser, setCurrentUser] = useState({});
     const [userToken, setUserToken] = useState()
     const location = useLocation();
 
-    useEffect(() => {
-        if(location.state){
-            setCurrentUser(location.state.data); // result: 'some_value'
-        }
-    }, [location]);
 
     useEffect(() => {
         axios.post("http://localhost:4000/", {
@@ -81,19 +80,18 @@ const MainMap = () => {
         })
         .catch(err => console.log(err))
 
-    }, [lat, lng]);
+    }, [center]);
 
     useEffect(() => {
         const newMarks = markets.map((market) => {
             const { latitude, longitude, fmid, id } = market;
             return (
                 <Marker 
-                    key={id}
+                    id={id}
                     lat={latitude}
                     lng={longitude}
-                    zIndex={1}
                     onClick={() => {
-                        getMarketData(id)
+                        handleMarkerClick(id)
                     }}
                 />
             )
@@ -129,13 +127,13 @@ const MainMap = () => {
         }
         })
         .then(resp => {
-            const market = resp.data.data.market
+            const market = resp.data.data
             if(market) setCurrentMarket(market)
         })
         .catch(err => console.log(err))
     }, [currentMarker]);
 
-    const getMarketData = ((data) => {
+    const handleMarkerClick = ((data) => {
         setCurrentMarker(data)
     })
 
@@ -155,26 +153,19 @@ const MainMap = () => {
         maxZoom: 17,
     }
 
-    const handleUser = (data) => {
-        var headers = {
-            'Content-Type': 'application/json',
-            'x-auth-token': data.currentUser.token
-        }
-        axios.post(`http://localhost:5000/users/${data.currentUser.user.id}/favorites/${data.currentMarket.fmid}`, data.currentMarket, {headers: headers})
-        .then(res => {
-            setCurrentUser(res.data)
+    const handleSearch = (data) => {
+        Geocode.fromAddress(data.location)
+        .then(resp => {
+            setCenter(resp.results[0].geometry.location)
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log('err', err))
     }
 
-    console.log('center:', center)
     const [error, setError] = useState()
     return (
         <WindowWrapper>
             <MapWrapper>
-                <SearchWrapper onSearchChange={setCenter}/>
+                <SearchWrapper handleSearch={handleSearch}/>
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
@@ -190,7 +181,7 @@ const MainMap = () => {
             <DetailPane 
                 currentMarket={currentMarket}
                 currentUser={currentUser}
-                handleUser={handleUser}
+                handleUserFavorites={handleUserFavorites}
             />
         </WindowWrapper>    
     );

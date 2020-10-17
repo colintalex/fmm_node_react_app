@@ -16,21 +16,15 @@ const StyledDetailPane = styled.div`
     margin-left: auto;
     `
 
-const MarketDetailPane = ((props) => {
-    let { currentMarket, handleUser, currentUser } = props;
-
-    const handleFavUpdate = ((data) => {
-       
-    })
-
+const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) => {
     if(currentMarket){
     return (
         <StyledDetailPane>
-            <h3>{currentMarket.marketname}</h3>
-            <h4>{currentMarket.street}<br/>{currentMarket.city}, {currentMarket.state}</h4>
-            <h5>{currentMarket.seasonDates}</h5>
+            <h3>{currentMarket.market.marketname}</h3>
+            <h4>{currentMarket.market.street}<br/>{currentMarket.market.city}, {currentMarket.market.state}</h4>
+            <h5>{currentMarket.market.seasonDates}</h5>
             <a href=''>Website</a>
-            <button onClick={() => handleUser(props)} value={props}>Fav</button>
+            <button onClick={() => handleUserFavorites({market: currentMarket, user: currentUser})}>Fav</button>
         </StyledDetailPane>
     )} else {
         return (

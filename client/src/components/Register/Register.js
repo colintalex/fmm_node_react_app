@@ -15,27 +15,21 @@ const StyledInputs = styled.input`
     margin: 10px;
 `
 
-const Register = (() => {
+const Register = (({ currentUser, handleUserRegister }) => {
     const { register, handleSubmit, errors} = useForm();
-    const [currentUser, setCurrentUser] = useState({});
     const history = useHistory();
     const [errorMsg, setErrorMsg] = useState()
     
 
     
-    const _onSubmit = ((data) => {
-        axios.post('http://localhost:5000/users/register', data)
-            .then((res) => {
-                history.push('/main_map', {data: res.data})
-            })
-            .catch((error) => {
-                setErrorMsg(error.response.data.error)
-            })
+    const _handleUserRegisterRedirect = ((data) => {
+        handleUserRegister(data)
+        history.push('/main_map')
     })
 
     return(
         <StyledFormWrapper>
-            <StyledForm onSubmit={handleSubmit(_onSubmit)}>
+            <StyledForm onSubmit={handleSubmit(_handleUserRegisterRedirect)}>
                 <StyledInputs
                     placeholder='Username'
                     type='text'

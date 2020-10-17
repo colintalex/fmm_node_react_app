@@ -22,7 +22,7 @@ const Marker = ((props) => {
 
     return (
         <div style={hoverStyle} lat={props.lat} lng={props.lng}>
-            <img style={hoverHeight} key={props.$dimensionKey} src='https://raw.githubusercontent.com/tylerpporter/find_my_market_fe/master/assets/FMM_icon_no_border.png'/>
+            <img style={hoverHeight} key={props.id + Date.now()} src='https://raw.githubusercontent.com/tylerpporter/find_my_market_fe/master/assets/FMM_icon_no_border.png'/>
         </div>
     )
 })
