@@ -150,18 +150,13 @@ const MainMap = () => {
         childProps.onClick()
     })
 
-    const handleApiLoaded = (map, maps) => {
-
-    };
-
-    const OPTIONS = {
+    const MAP_OPTIONS = {
         minZoom: 10,
         maxZoom: 17,
     }
 
-
     const handleUser = (data) => {
-         var headers = {
+        var headers = {
             'Content-Type': 'application/json',
             'x-auth-token': data.currentUser.token
         }
@@ -175,7 +170,7 @@ const MainMap = () => {
     }
 
     console.log('center:', center)
-
+    const [error, setError] = useState()
     return (
         <WindowWrapper>
             <MapWrapper>
@@ -184,7 +179,7 @@ const MainMap = () => {
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}
                 zoom={zoom}
-                options={OPTIONS}
+                options={MAP_OPTIONS}
                 yesIWantToUseGoogleMapApiInternals
                 onChange={_onChange}
                 onChildClick={_onChildClick}

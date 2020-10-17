@@ -75,6 +75,8 @@ router.post('/register', (req, res) => {
 router.post('/:id/favorites/:market_fmid', auth, (req, res) => {
     const user = User.findOne({ _id: req.params.id})
     .then((newUser) => {
+      let fav = newUser.favorites.find( element => element.market_fmid === req.params.market_fmid)
+      if(fav) res.status(409).json({error: 'Favorite already exists for user'})
       newUser.favorites.push({market_fmid: req.params.market_fmid})
       newUser.save()
         jwt.sign(
