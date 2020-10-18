@@ -51,8 +51,8 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     return(
         <div>
             <div className='user-logger'>
-                {currentUser.user && <button onClick={handleUserLogging}>Log Out</button>}
-                {!currentUser.user && <button onClick={handleUserLogging}>Log In</button>}
+                {currentUser.user && <button onClick={() => handleUserLogging({action: 'logout'})}>Log Out</button>}
+                {!currentUser.user && <a href='/login'>Log In</a>}
             </div>
             <SearchBar>
                 <form onSubmit={handleSubmit(handleSearch)}>

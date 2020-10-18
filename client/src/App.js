@@ -71,7 +71,9 @@ const App = () => {
     }
 
     const handleUserLogging = (data) => {
+      if(data.action === 'logout'){
         setCurrentUser({});
+      }
     };
 
   return (
