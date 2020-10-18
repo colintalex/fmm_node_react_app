@@ -24,7 +24,7 @@ const WindowWrapper = styled.div`
     background: #fff;
 `
 
-const MainMap = ({ currentUser, handleUserFavorites }) => {
+const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     const history = useHistory();
     const [center, setCenter] = useState({lat: 39.741667, lng: -104.978649});
     const [lat, setLat] = useState(39.741667);
@@ -161,11 +161,14 @@ const MainMap = ({ currentUser, handleUserFavorites }) => {
         .catch(err => console.log('err', err))
     }
 
-    const [error, setError] = useState()
     return (
         <WindowWrapper>
             <MapWrapper>
-                <SearchWrapper handleSearch={handleSearch}/>
+                <SearchWrapper 
+                    handleSearch={handleSearch}
+                    currentUser={currentUser}
+                    handleUserLogging={handleUserLogging}
+                />
                 <GoogleMap
                 bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
                 center={center}

@@ -31,17 +31,33 @@ const App = () => {
 
     const handleUserFavorites = (data) => {
       // data.market
-      var headers = {
-          'Content-Type': 'application/json',
-          'x-auth-token': data.user.token
-      }
-      axios.post(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.market.fmid}`, data.market.market, {headers: headers})
-      .then(res => {
+      if(data.action === 'add') {
+        var headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token': data.user.token
+        }
+        axios.post(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.market.fmid}`, data.market.market, {headers: headers})
+        .then(res => {
           setCurrentUser(res.data)
-      })
-      .catch(err => {
-          console.log(err)
-      })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      }
+
+      if(data.action === 'remove') {
+        var headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token': data.user.token
+        }
+        axios.delete(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.market.fmid}`, {headers: headers})
+        .then(res => {
+          setCurrentUser(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      }
     }
 
     const handleUserRegister = (data) => {
@@ -54,12 +70,19 @@ const App = () => {
       })
     }
 
+    const handleUserLogging = (data) => {
+      if(data.action === 'logout'){
+        setCurrentUser({});
+      }
+    };
+
   return (
         <Switch>
           <Route path="/main_map">
             <MainMap 
               currentUser={currentUser}
               handleUserFavorites={handleUserFavorites}
+              handleUserLogging={handleUserLogging}
             />
           </Route>
           <Route path='/login'>

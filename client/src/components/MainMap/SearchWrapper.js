@@ -44,26 +44,27 @@ const StyledSubmit = styled.button`
     margin-left: 5px;
 `
 
-const SearchWrapper = (({ handleSearch }) => {
+const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     const { register, handleSubmit, errors} = useForm();
     const [search, setSearch] = useState('')
 
-
-    const _onSubmit = (e) => {
-        
-    }
-
     return(
-        <SearchBar>
-            <form onSubmit={handleSubmit(handleSearch)}>
-                <StyledInput type='text' 
-                    placeholder='Search by City, State' 
-                    ref={register}
-                    name='location'   
-                ></StyledInput>
-                <StyledSubmit type='submit'>Search</StyledSubmit>
-            </form>
-        </SearchBar>
+        <div>
+            <div className='user-logger'>
+                {currentUser.user && <button onClick={() => handleUserLogging({action: 'logout'})}>Log Out</button>}
+                {!currentUser.user && <a href='/login'>Log In</a>}
+            </div>
+            <SearchBar>
+                <form onSubmit={handleSubmit(handleSearch)}>
+                    <StyledInput type='text' 
+                        placeholder='Search by City, State' 
+                        ref={register}
+                        name='location'   
+                    ></StyledInput>
+                    <StyledSubmit type='submit'>Search</StyledSubmit>
+                </form>
+            </SearchBar>
+        </div>
     )
 });
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import FavoriteComponent from './FavoriteComponent'
 import styled from 'styled-components'
@@ -17,6 +17,20 @@ const StyledDetailPane = styled.div`
     `
 
 const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) => {
+    const [favoriteDisplay, setFavoriteDisplay] = useState(true);
+
+
+    useEffect(() => {
+        if(currentUser.user && currentMarket){
+            let fav = currentUser.user.favorites.find(fav => parseInt(fav.market_fmid) === currentMarket.market.fmid)
+            if(fav === undefined) {
+                setFavoriteDisplay(true)
+            }else{
+                setFavoriteDisplay(false)
+            }
+        }
+    }, [currentMarket, currentUser])
+
     if(currentMarket){
     return (
         <StyledDetailPane>
@@ -24,7 +38,8 @@ const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) 
             <h4>{currentMarket.market.street}<br/>{currentMarket.market.city}, {currentMarket.market.state}</h4>
             <h5>{currentMarket.market.seasonDates}</h5>
             <a href=''>Website</a>
-            <button onClick={() => handleUserFavorites({market: currentMarket, user: currentUser})}>Fav</button>
+            { currentUser && favoriteDisplay && <button onClick={() => handleUserFavorites({action: 'add',market: currentMarket, user: currentUser})}>Fav</button>}
+            { currentUser && !favoriteDisplay && <button onClick={() => handleUserFavorites({action: 'remove',market: currentMarket, user: currentUser})}>Un-Favorite</button>}
         </StyledDetailPane>
     )} else {
         return (
