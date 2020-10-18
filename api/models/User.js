@@ -13,7 +13,7 @@ const FavoriteSchema = new Schema({
     //     name
     // }
     market_fmid: {
-        type: String,
+        type: Number,
         required: true
     },
     marketname: {
