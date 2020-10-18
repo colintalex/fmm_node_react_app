@@ -73,12 +73,23 @@ router.post('/register', (req, res) => {
 /* POST New single favorite/s to user. */
 // NOTE----- Need to verify FMID somehow, so we don't save random numbers that don't associate
 router.post('/:id/favorites/:market_fmid', auth, (req, res, next) => {
+    let market = req.body
     const auser = User.findOne({_id: req.params.id})
     .then((user) => {
       const fav = user.favorites.find(element => element.market_fmid == req.params.market_fmid)
       if(fav) throw new Error({message: 'coostumerror'}) // thorw an error
-
-      user.favorites.push({market_fmid: req.params.market_fmid})
+      user.favorites.push({
+        market_fmid: market.fmid,
+        marketname: market.marketname,
+        latitude: market.latitude,
+        longitude: market.longitude,
+        seasonDates: market.seasonDates,
+        street: market.street,
+        city: market.city,
+        state: market.state,
+        zip: market.zip,
+        products: market.products
+      })
       user.save()
       .then((savedUser) => {
         jwt.sign(
