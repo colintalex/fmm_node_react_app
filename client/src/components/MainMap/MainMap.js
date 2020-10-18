@@ -69,7 +69,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         variables: {
             lat: lat,
             lng: lng,
-            radius: (200),
+            radius: (100),
             products: searchProducts,
             date: searchDate
         }
@@ -82,24 +82,42 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     }, [lat, lng]);
 
     useEffect(() => {
+        const favMarkets = currentUser.user.favorites
         const newMarks = markets.map((market) => {
             const { latitude, longitude, fmid, id } = market;
-            return (
-                <Marker 
-                    key={fmid}
-                    id={id}
-                    lat={latitude}
-                    lng={longitude}
-                    zIndex={1}
-                    img={greenMarker}
-                    onClick={() => {
-                        handleMarkerClick(id)
-                    }}
-                />
-            )
+            const favorited = favMarkets.find(favorite => favorite.fmid === fmid)
+            if(favorited){
+                return (
+                    <Marker 
+                        key={fmid}
+                        id={id}
+                        lat={latitude}
+                        lng={longitude}
+                        zIndex={1}
+                        img={redMarker}
+                        onClick={() => {
+                            handleMarkerClick(id)
+                        }}
+                    />
+                )
+            }else{
+                return (
+                    <Marker 
+                        key={fmid}
+                        id={id}
+                        lat={latitude}
+                        lng={longitude}
+                        zIndex={1}
+                        img={greenMarker}
+                        onClick={() => {
+                            handleMarkerClick(id)
+                        }}
+                    />
+                )
+            }
         });
         setMarks(newMarks);
-    }, [markets]);
+    }, [markets, currentUser]);
 
 
     useEffect(() => {
@@ -156,7 +174,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     })
 
     const MAP_OPTIONS = {
-        minZoom: 10,
+        minZoom: 11,
         maxZoom: 17,
         fullscreenControl: false,
     }
