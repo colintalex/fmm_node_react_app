@@ -12,7 +12,19 @@ const StyledDetailPane = styled.div`
     box-shadow: -2px 4px 10px #333;
     width: 40vw;
     margin-left: auto;
+    text-align: center;
     `
+
+const StyledMarketButton = styled.button`
+    width: auto;
+    height: 30px;
+    opacity: 95%;
+    font-size: 14px;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
+`
 
 const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) => {
     const [favoriteDisplay, setFavoriteDisplay] = useState(true);
@@ -32,12 +44,12 @@ const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) 
     if(currentMarket){
     return (
         <StyledDetailPane>
-            <h3>{currentMarket.market.marketname}</h3>
-            <h4>{currentMarket.market.street}<br/>{currentMarket.market.city}, {currentMarket.market.state}</h4>
+            <h3>{currentMarket.market.marketname} / {currentMarket.market.city}, {currentMarket.market.state}</h3>
+            <h4>{currentMarket.market.street}</h4>
             <h5>{currentMarket.market.seasonDates}</h5>
-            <a href=''>Website</a>
-            { currentUser && favoriteDisplay && <button onClick={() => handleUserFavorites({action: 'add',market: currentMarket.market, user: currentUser})}>Fav</button>}
-            { currentUser && !favoriteDisplay && <button onClick={() => handleUserFavorites({action: 'remove',market: currentMarket.market, user: currentUser})}>Un-Favorite</button>}
+            <StyledMarketButton href=''>Website</StyledMarketButton>
+            { currentUser.user && favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'add',market: currentMarket.market, user: currentUser})}>Favorite</StyledMarketButton>}
+            { currentUser.user && !favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'remove',market: currentMarket.market, user: currentUser})}>Un-Favorite</StyledMarketButton>}
         </StyledDetailPane>
     )} else {
         return (
