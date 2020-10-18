@@ -17,15 +17,17 @@ const StyledUserDetailPane = styled.div`
 
 `
 
-const UserDetailPane = (({currentUser, handleUser}) => {
+const UserDetailPane = (({currentUser, handleUserFavorites, handleMarketGoTo}) => {
     const user = currentUser.user
     if(user){
         return (
             <StyledUserDetailPane>
                 Current User: {user.user_name}<br/>
                 <UserFavoritesDetail 
+                    handleMarketGoTo={handleMarketGoTo}
+                    currentUser={currentUser} 
+                    handleUserFavorites={handleUserFavorites}
                     className='favorites-grid' 
-                    user={user}
                 />
             </StyledUserDetailPane>
         )

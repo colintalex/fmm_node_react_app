@@ -79,7 +79,7 @@ router.post('/:id/favorites/:market_fmid', auth, (req, res, next) => {
       const fav = user.favorites.find(element => element.market_fmid == req.params.market_fmid)
       if(fav) throw new Error({message: 'coostumerror'}) // thorw an error
       user.favorites.push({
-        market_fmid: market.fmid,
+        fmid: market.fmid,
         marketname: market.marketname,
         latitude: market.latitude,
         longitude: market.longitude,
@@ -141,7 +141,7 @@ router.delete('/:id/favorites/:fav_id', auth, (req, res, next) => {
     User.findOne({_id: req.params.id})
     .then((user) => {
       // user.favorites.remove({fmid: req.params.fav_id})
-      const fav = user.favorites.find(f => f.market_fmid === parseInt(req.params.fav_id))
+      const fav = user.favorites.find(f => f.fmid === parseInt(req.params.fav_id))
       fav.remove();
       user.save()
       .then((savedUser) => {

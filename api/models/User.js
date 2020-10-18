@@ -12,7 +12,7 @@ const FavoriteSchema = new Schema({
     // products {
     //     name
     // }
-    market_fmid: {
+    fmid: {
         type: Number,
         required: true
     },

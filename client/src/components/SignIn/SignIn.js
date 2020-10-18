@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom'
 
 const SignIn = (({ currentUser, handleAuthentication }) => {
     const history = useHistory();
-    const { register, handleSubmit, errors} = useForm();
-    const [errorMsg, setErrorMsg] = useState()
+    const { register, handleSubmit } = useForm();
 
     const _handleAuthenticationRedirect = ((data) => {
         handleAuthentication(data)

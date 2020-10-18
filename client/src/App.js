@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Switch, Redirect, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Switch, Route } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 import MainMap from './components/MainMap/MainMap';
@@ -8,7 +8,7 @@ import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
 
 const App = () => {
-  const history = useHistory();
+
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('currentUser')) || '');
 
   // var headers = {
@@ -36,7 +36,7 @@ const App = () => {
             'Content-Type': 'application/json',
             'x-auth-token': data.user.token
         }
-        axios.post(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.market.fmid}`, data.market.market, {headers: headers})
+        axios.post(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.fmid}`, data.market, {headers: headers})
         .then(res => {
           setCurrentUser(res.data)
         })
@@ -47,10 +47,10 @@ const App = () => {
 
       if(data.action === 'remove') {
         var headers = {
-            'Content-Type': 'application/json',
-            'x-auth-token': data.user.token
+          'Content-Type': 'application/json',
+          'x-auth-token': data.user.token
         }
-        axios.delete(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.market.fmid}`, {headers: headers})
+        axios.delete(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.fmid}`, {headers: headers})
         .then(res => {
           setCurrentUser(res.data)
         })

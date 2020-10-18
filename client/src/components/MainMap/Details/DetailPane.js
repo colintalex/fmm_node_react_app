@@ -1,16 +1,8 @@
-import axios from 'axios';
-import { debug } from 'dotenv/lib/env-options';
 import React from 'react'
 import styled from 'styled-components'
 import UserDetailPane from './UserDetailPane';
 import MarketDetailPane from './MarketDetailPane'
 
-
-
-    // #38A3A5
-    // darker ^ #2c8385
-
-    // magenta shade EF8275
     const DetailWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -24,15 +16,8 @@ import MarketDetailPane from './MarketDetailPane'
         margin: 8px;
     }
 `
-
-const FavDiv = styled.div`
-    width: 10px;
-    height: 10px;
-    background: red;
-`
 // NOTE-- Add custom icons for types of products
-
-const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUser }) => {
+const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleMarketGoTo }) => {
 
     return (
         <DetailWrapper>
@@ -43,7 +28,9 @@ const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUs
             />
             <UserDetailPane 
                 currentUser={currentUser}
-                handleUser={handleUser}
+                handleUserFavorites={handleUserFavorites}
+                currentMarket={currentMarket}
+                handleMarketGoTo={handleMarketGoTo}
             />
         </DetailWrapper>
     )
