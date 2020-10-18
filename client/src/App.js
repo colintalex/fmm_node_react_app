@@ -70,12 +70,17 @@ const App = () => {
       })
     }
 
+    const handleUserLogging = (data) => {
+        setCurrentUser({});
+    };
+
   return (
         <Switch>
           <Route path="/main_map">
             <MainMap 
               currentUser={currentUser}
               handleUserFavorites={handleUserFavorites}
+              handleUserLogging={handleUserLogging}
             />
           </Route>
           <Route path='/login'>

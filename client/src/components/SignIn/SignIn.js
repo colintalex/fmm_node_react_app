@@ -22,7 +22,7 @@ const SignIn = (({ currentUser, handleAuthentication }) => {
                 <br />
                 <label for="password">Password</label>
                 <br />
-                <input type="current-password" name="password" ref={register}></input>
+                <input type="password" name="password" ref={register}></input>
                 <br />
                 <input type="submit" text='Submit' />
             </form>
