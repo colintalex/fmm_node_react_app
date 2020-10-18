@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000",
+    "client-install": "npm install --prefix client", 
+    "server": "nodemon ./bin/www",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "axios": "^0.20.0",
