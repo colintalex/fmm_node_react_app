@@ -3,15 +3,31 @@ import styled from 'styled-components';
 
 const TileGridWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     height: auto;
     width: 100%;
-    background: red;
+`
+const StyledMarketButton = styled.button`
+    width: auto;
+    height: 30px;
+    opacity: 95%;
+    font-size: 14px;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
 `
 
 const StyledTile = styled.div`
     display: inline-block;
-    width: 25%;
+    width: auto;
+    margin: 0 10px 10px 10px;
+    height: 125px;
+    justify-content: center;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
 `
 
 const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGoTo }) => {
@@ -22,14 +38,12 @@ const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGo
         const favTiles = currentUser.user.favorites.map(fav => {
             console.log(fav)
             return (
-                <div>
                     <StyledTile id={fav.fmid} key={fav.fmid}>
                         <h5>{fav.marketname}</h5>
-                        <p>{fav.city}</p>
-                        <button onClick={() => handleUserFavorites({action: 'remove',market: fav, user: currentUser})}>Un-Fav</button>
-                        <button onClick={() => handleMarketGoTo({market: fav})}>Go to me!</button>
+                        <p>{fav.city}, {fav.state}</p>
+                        <StyledMarketButton onClick={() => handleUserFavorites({action: 'remove',market: fav, user: currentUser})}>Un-Fav</StyledMarketButton>
+                        <StyledMarketButton onClick={() => handleMarketGoTo({market: fav})}>Go to me!</StyledMarketButton>
                     </StyledTile>
-                </div>
             )
         })
         setFavTiles(favTiles)

@@ -43,7 +43,7 @@ const StyledSelect = styled.select`
     color: #fff;
     outline: none !important;
     padding-left: 15px;
-
+    margin-left: 5px;
 `
 
 const StyledSubmit = styled.button`
@@ -75,17 +75,21 @@ const StyledLogger = styled.button`
     border-radius: 20px;
 `
 
+const StyledTopWrapper = styled.div`
+    text-align: center;
+`
+
 const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     const { register, handleSubmit} = useForm();
     const history = useHistory();
 
 
-    const testProducts = [{name: ''}, {name: 'apples'}, {name: 'oranges'}, {name: 'bananas'}]
+    const testProducts = [{name: []}, {name: ['apples']}, {name: 'oranges'}, {name: 'bananas'}]
     const testDates = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const productsMenu = testProducts.map(product => {
         return (
-            <option  >{product.name}</option>
+            <option type='radio'>{product.name}</option>
         )
     })
     const datesMenu = testDates.map(date => {
@@ -94,7 +98,7 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
         )
     })
     return(
-        <div>
+        <StyledTopWrapper>
                 {currentUser.user && <StyledLogger onClick={() => handleUserLogging({action: 'logout'})}>Log Out</StyledLogger>}
                 {!currentUser.user && <StyledLogger onClick={() => history.push('/login')}>Log In</StyledLogger>}
             <SearchBar>
@@ -106,23 +110,29 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
                     ></StyledInput>
                     <StyledSelect
                         placeholder='Products'
+                        name='products' 
+                        ref={register}
                     >
                         {productsMenu}
                     </StyledSelect>
                     <StyledSelect
                         placeholder='Start Date'
+                        name='start-date' 
+                        ref={register}
                     >
                         {datesMenu}
                     </StyledSelect>
                     <StyledSelect
                         placeholder={'End Date'}
+                        name='end-date' 
+                        ref={register}
                     >
                         {datesMenu}
                     </StyledSelect>
                     <StyledSubmit type='submit'>Search</StyledSubmit>
                 </form>
             </SearchBar>
-        </div>
+        </StyledTopWrapper>
     )
 });
 

@@ -1,0 +1,53 @@
+{
+  "name": "fmm_node_react_app",
+  "version": "1.0.0",
+  "description": "Node.js/Express using MongoDB as a backend pointing to a React client app.\r Attempting to recreate final project, Find My Market, in new languages with hopes for faster db queries.",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "http-errors": "^1.8.0",
+    "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http": "0.0.1-security",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.9",
+    "morgan": "~1.9.1",
+    "google-map-react": "^2.1.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-geocode": "^0.2.2",
+    "react-google-maps": "^9.4.5",
+    "react-hook-form": "^6.9.2",
+    "react-pure-render": "^1.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-sidebar": "^3.0.2",
+    "styled-components": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./api/bin/www",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colintalex/fmm_node_react_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colintalex/fmm_node_react_app/issues"
+  },
+  "homepage": "https://github.com/colintalex/fmm_node_react_app#readme",
+  "engines": {
+    "node": "12.18.1"
+  }
+}

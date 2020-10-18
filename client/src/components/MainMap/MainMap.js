@@ -3,15 +3,15 @@ import GoogleMap from 'google-map-react'
 import axios from 'axios'
 import styled from 'styled-components'
 import Marker from './Marker'
+
 import DetailPane from './Details/DetailPane'
 import SearchWrapper from './SearchWrapper'
-import { useLocation, useHistory } from 'react-router-dom'
 import Geocode from 'react-geocode'
+require('dotenv/config');
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+
 const greenMarker = require('../MainMap/FMM_icon_no_border.png')
 const redMarker = require('../MainMap/FMM_icon_no_border_favorites.png')
-
-require('dotenv/config');
-Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
 const MapWrapper = styled.div`
     height: 75vh;
@@ -40,7 +40,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
 
 
     useEffect(() => {
-        axios.post("http://localhost:4000/", {
+        axios.post("https://usda-api-colin.herokuapp.com/", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         variables: {
             lat: lat,
             lng: lng,
-            radius: (200),
+            radius: (75),
             products: searchProducts,
             date: searchDate
         }
@@ -79,31 +79,52 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         })
         .catch(err => console.log(err))
 
-    }, [lat, lng]);
+    }, [lat, lng, searchProducts]);
 
     useEffect(() => {
+        const user = currentUser.user
         const newMarks = markets.map((market) => {
             const { latitude, longitude, fmid, id } = market;
-            return (
-                <Marker 
-                    key={fmid}
-                    id={id}
-                    lat={latitude}
-                    lng={longitude}
-                    zIndex={1}
-                    img={greenMarker}
-                    onClick={() => {
-                        handleMarkerClick(id)
-                    }}
-                />
-            )
+            let favorited;
+            if(user){
+                favorited = user.favorites.find(favorite => favorite.fmid === fmid)
+            }
+            if(favorited){
+                return (
+                    <Marker 
+                        key={fmid}
+                        id={id}
+                        lat={latitude}
+                        lng={longitude}
+                        zIndex={2}
+                        img={redMarker}
+                        onClick={() => {
+                            handleMarkerClick(id)
+                        }}
+                    />
+                )
+            }else{
+                return (
+                    <Marker 
+                        key={fmid}
+                        id={id}
+                        lat={latitude}
+                        lng={longitude}
+                        zIndex={1}
+                        img={greenMarker}
+                        onClick={() => {
+                            handleMarkerClick(id)
+                        }}
+                    />
+                )
+            }
         });
         setMarks(newMarks);
-    }, [markets]);
+    }, [markets, currentUser]);
 
 
     useEffect(() => {
-        axios.post("http://localhost:4000/", {
+        axios.post("https://usda-api-colin.herokuapp.com/", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -156,12 +177,18 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     })
 
     const MAP_OPTIONS = {
-        minZoom: 10,
+        minZoom: 11,
         maxZoom: 17,
         fullscreenControl: false,
     }
 
     const handleSearch = (data) => {
+        if(data.products.length > 0){
+            setSearchProducts([data.products])
+        }else{
+            setSearchProducts([])
+        }
+        //data.start and end date translation
         Geocode.fromAddress(data.location)
         .then(resp => {
             setCenter(resp.results[0].geometry.location)
@@ -186,13 +213,13 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
                     handleUserLogging={handleUserLogging}
                 />
                 <GoogleMap
-                bootstrapURLKeys={{ key: 'AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE'}}
+                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
                 center={center}
                 zoom={zoom}
                 options={MAP_OPTIONS}
-                yesIWantToUseGoogleMapApiInternals
                 onChange={_onChange}
                 onChildClick={_onChildClick}
+                yesIWantToUseGoogleMapApiInternals
                 >
                     {favMarks}
                     {marks}
