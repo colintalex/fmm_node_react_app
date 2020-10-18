@@ -80,7 +80,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         })
         .catch(err => console.log(err))
 
-    }, [center]);
+    }, [lat, lng]);
 
     useEffect(() => {
         const newMarks = markets.map((market) => {
