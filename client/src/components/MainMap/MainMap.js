@@ -158,6 +158,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     const MAP_OPTIONS = {
         minZoom: 10,
         maxZoom: 17,
+        fullscreenControl: false,
     }
 
     const handleSearch = (data) => {
@@ -171,7 +172,8 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
 
 
     const handleMarketGoTo = (data) => {
-        setCenter({lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)})
+        setCurrentMarket(data)
+        setCenter({lat: parseFloat(data.market.latitude), lng: parseFloat(data.market.longitude)})
         setZoom(14)
     }
 

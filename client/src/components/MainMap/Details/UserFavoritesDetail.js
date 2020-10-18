@@ -27,7 +27,7 @@ const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGo
                         <h5>{fav.marketname}</h5>
                         <p>{fav.city}</p>
                         <button onClick={() => handleUserFavorites({action: 'remove',market: fav, user: currentUser})}>Un-Fav</button>
-                        <button onClick={() => handleMarketGoTo(fav)}>Go to me!</button>
+                        <button onClick={() => handleMarketGoTo({market: fav})}>Go to me!</button>
                     </StyledTile>
                 </div>
             )
