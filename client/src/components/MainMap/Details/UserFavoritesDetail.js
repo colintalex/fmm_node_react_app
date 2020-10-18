@@ -14,8 +14,9 @@ const StyledTile = styled.div`
     width: 25%;
 `
 
-const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleUser }) => {
+const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGoTo }) => {
     const [favTiles, setFavTiles] = useState([]);
+
 
     useEffect(() => {
         const favTiles = currentUser.user.favorites.map(fav => {
@@ -26,6 +27,7 @@ const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleUser }) 
                         <h5>{fav.marketname}</h5>
                         <p>{fav.city}</p>
                         <button onClick={() => handleUserFavorites({action: 'remove',market: fav, user: currentUser})}>Un-Fav</button>
+                        <button onClick={() => handleMarketGoTo(fav)}>Go to me!</button>
                     </StyledTile>
                 </div>
             )

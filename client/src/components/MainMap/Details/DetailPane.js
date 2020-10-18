@@ -17,7 +17,7 @@ import MarketDetailPane from './MarketDetailPane'
     }
 `
 // NOTE-- Add custom icons for types of products
-const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUser }) => {
+const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleMarketGoTo }) => {
 
     return (
         <DetailWrapper>
@@ -30,6 +30,7 @@ const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUs
                 currentUser={currentUser}
                 handleUserFavorites={handleUserFavorites}
                 currentMarket={currentMarket}
+                handleMarketGoTo={handleMarketGoTo}
             />
         </DetailWrapper>
     )

@@ -164,8 +164,15 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         Geocode.fromAddress(data.location)
         .then(resp => {
             setCenter(resp.results[0].geometry.location)
+            setZoom(11);
         })
         .catch(err => console.log('err', err))
+    }
+
+
+    const handleMarketGoTo = (data) => {
+        setCenter({lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)})
+        setZoom(14)
     }
 
     return (
@@ -193,6 +200,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
                 currentMarket={currentMarket}
                 currentUser={currentUser}
                 handleUserFavorites={handleUserFavorites}
+                handleMarketGoTo={handleMarketGoTo}
             />
         </WindowWrapper>    
     );
