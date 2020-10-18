@@ -72,31 +72,33 @@ router.post('/register', (req, res) => {
 
 /* POST New single favorite/s to user. */
 // NOTE----- Need to verify FMID somehow, so we don't save random numbers that don't associate
-router.post('/:id/favorites/:market_fmid', auth, (req, res) => {
-    const user = User.findOne({ _id: req.params.id})
-    .then((newUser) => {
-      let fav = newUser.favorites.find( element => element.market_fmid === req.params.market_fmid)
-      if(fav) res.status(409).json({error: 'Favorite already exists for user'})
-      newUser.favorites.push({market_fmid: req.params.market_fmid})
-      newUser.save()
-        jwt.sign(
-            {id: newUser.id},
-            process.env.JWT_SECRET,
-            { expiresIn: 3600 }, (err, token) => {
-              if(err) throw err;
-              res.json({
-                user: {
-                  id: newUser._id,
-                  user_name: newUser.user_name,
-                  email: newUser.email,
-                  favorites: newUser.favorites
-                }, token: token
-              })
+router.post('/:id/favorites/:market_fmid', auth, (req, res, next) => {
+    const auser = User.findOne({_id: req.params.id})
+    .then((user) => {
+      const fav = user.favorites.find(element => element.market_fmid == req.params.market_fmid)
+      if(fav) throw new Error({message: 'coostumerror'}) // thorw an error
 
-            }
-          )
+      user.favorites.push({market_fmid: req.params.market_fmid})
+      user.save()
+      .then((savedUser) => {
+        jwt.sign(
+          {id: savedUser.id},
+          process.env.JWT_SECRET,
+          { expiresIn: 3600 }, (err, token) => {
+            if(err) throw err;
+            res.json({
+              user: {
+                id: savedUser._id,
+                user_name: savedUser.savedUser_name,
+                email: savedUser.email,
+                favorites: savedUser.favorites
+              }, token: token
+            })
+          }
+        )
+      })
     })
-    .catch((err) => res.json(err));
+    .catch(next)
 });
 
 /* PATCH Update current user attributes. */
@@ -124,16 +126,32 @@ router.delete('/:id', auth, (req, res) => {
 );
 
 /* Delete favorite from current user */
-router.delete('/:id/favorites/:fav_id', auth, (req, res) => {
+router.delete('/:id/favorites/:fav_id', auth, (req, res, next) => {
     User.findOne({_id: req.params.id})
     .then((user) => {
-      user.favorites.remove({_id: req.params.fav_id})
+      // user.favorites.remove({fmid: req.params.fav_id})
+      const fav = user.favorites.find(f => f.market_fmid === parseInt(req.params.fav_id))
+      fav.remove();
       user.save()
-      res.json(user)
+      .then((savedUser) => {
+        jwt.sign(
+          {id: savedUser.id},
+          process.env.JWT_SECRET,
+          { expiresIn: 3600 }, (err, token) => {
+            if(err) throw err;
+            res.json({
+              user: {
+                id: savedUser._id,
+                user_name: savedUser.savedUser_name,
+                email: savedUser.email,
+                favorites: savedUser.favorites
+              }, token: token
+            })
+          }
+        )
+      })
     })
-    .catch((err) => {
-        res.json(err)
-    })
+    .catch(next)
 });
 
 module.exports = router;
