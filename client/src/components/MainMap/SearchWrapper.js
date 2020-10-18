@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
 
 const SearchBar = styled.div`
@@ -44,16 +45,30 @@ const StyledSubmit = styled.button`
     margin-left: 5px;
 `
 
+const StyledLogger = styled.button`
+    position: fixed;
+    top: 15px;
+    left: 30px;
+    z-index: 2;
+    width: 70px;
+    height: 30px;
+    opacity: 95%;
+    font-size: 14px;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
+`
+
 const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     const { register, handleSubmit, errors} = useForm();
+    const history = useHistory();
     const [search, setSearch] = useState('')
 
     return(
         <div>
-            <div className='user-logger'>
-                {currentUser.user && <button onClick={() => handleUserLogging({action: 'logout'})}>Log Out</button>}
-                {!currentUser.user && <a href='/login'>Log In</a>}
-            </div>
+                {currentUser.user && <StyledLogger onClick={() => handleUserLogging({action: 'logout'})}>Log Out</StyledLogger>}
+                {!currentUser.user && <StyledLogger onClick={() => history.push('/login')}>Log In</StyledLogger>}
             <SearchBar>
                 <form onSubmit={handleSubmit(handleSearch)}>
                     <StyledInput type='text' 
