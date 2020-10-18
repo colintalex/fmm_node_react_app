@@ -7,7 +7,7 @@ const StyledUserDetailPane = styled.div`
     height: auto;
     width: 40vw;
     margin-right: auto;
-    padding: 20px 0px;
+    padding: 0 0 20px 0px;
     background: rgb(56,163,165);
     background: linear-gradient(0deg, rgba(56,163,165,1) 0%, rgba(61,178,180,1) 100%);
     margin: 15px;
@@ -43,7 +43,7 @@ const UserDetailPane = (({currentUser, handleUserFavorites, handleMarketGoTo}) =
     if(user){
         return (
             <StyledUserDetailPane>
-                Current User: {user.user_name}<br/>
+                <h3>Current User: {user.user_name}</h3>
                 <UserFavoritesDetail 
                     handleMarketGoTo={handleMarketGoTo}
                     currentUser={currentUser} 

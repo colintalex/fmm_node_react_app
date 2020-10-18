@@ -84,7 +84,7 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     const history = useHistory();
 
 
-    const testProducts = [{name: ''}, {name: 'apples'}, {name: 'oranges'}, {name: 'bananas'}]
+    const testProducts = [{name: []}, {name: ['apples']}, {name: 'oranges'}, {name: 'bananas'}]
     const testDates = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const productsMenu = testProducts.map(product => {
@@ -110,16 +110,22 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
                     ></StyledInput>
                     <StyledSelect
                         placeholder='Products'
+                        name='products' 
+                        ref={register}
                     >
                         {productsMenu}
                     </StyledSelect>
                     <StyledSelect
                         placeholder='Start Date'
+                        name='start-date' 
+                        ref={register}
                     >
                         {datesMenu}
                     </StyledSelect>
                     <StyledSelect
                         placeholder={'End Date'}
+                        name='end-date' 
+                        ref={register}
                     >
                         {datesMenu}
                     </StyledSelect>

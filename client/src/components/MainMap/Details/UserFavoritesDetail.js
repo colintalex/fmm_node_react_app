@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 const TileGridWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     height: auto;
     width: 100%;
-    background: red;
 `
 const StyledMarketButton = styled.button`
     width: auto;
@@ -21,9 +20,14 @@ const StyledMarketButton = styled.button`
 
 const StyledTile = styled.div`
     display: inline-block;
-    width: 100%;
+    width: auto;
+    margin: 0 10px 10px 10px;
     height: 125px;
     justify-content: center;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
 `
 
 const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGoTo }) => {
@@ -36,7 +40,7 @@ const UserFavoritesDetail = (({ currentUser, handleUserFavorites, handleMarketGo
             return (
                     <StyledTile id={fav.fmid} key={fav.fmid}>
                         <h5>{fav.marketname}</h5>
-                        <p>{fav.city}</p>
+                        <p>{fav.city}, {fav.state}</p>
                         <StyledMarketButton onClick={() => handleUserFavorites({action: 'remove',market: fav, user: currentUser})}>Un-Fav</StyledMarketButton>
                         <StyledMarketButton onClick={() => handleMarketGoTo({market: fav})}>Go to me!</StyledMarketButton>
                     </StyledTile>

@@ -6,12 +6,12 @@ const Marker = ((props) => {
     const hoverStyle = {
         position: 'absolute',
         zIndex: props.$hover ? 3 : props.zIndex,
-        top: (clicked === true || props.$hover) ? -45 : -30,
-        left: (clicked === true || props.$hover) ? -23 : -15,
+        top: (clicked === true || props.$hover) ? -60 : -50,
+        left: (clicked === true || props.$hover) ? -30 : -25,
     }
 
     const hoverHeight = {
-        height: (clicked === true || props.$hover) ? '45px' : '30px',
+        height: (clicked === true || props.$hover) ? '60px' : '50px',
         // zIndex: props.$hover ? 10 : 1
 
     }
