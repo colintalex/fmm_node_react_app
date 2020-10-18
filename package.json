@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/colintalex/fmm_node_react_app#readme",
   "engines": {
-        "node": "12.18.1"
-    }
-  
+    "node": "12.18.1"
+  }
 }
