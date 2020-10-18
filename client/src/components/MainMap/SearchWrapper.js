@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -61,9 +61,8 @@ const StyledLogger = styled.button`
 `
 
 const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
-    const { register, handleSubmit, errors} = useForm();
+    const { register, handleSubmit} = useForm();
     const history = useHistory();
-    const [search, setSearch] = useState('')
 
     return(
         <div>

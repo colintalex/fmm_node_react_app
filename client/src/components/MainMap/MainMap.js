@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMap from 'google-map-react'
-import Sidebar from 'react-sidebar';
 import axios from 'axios'
 import styled from 'styled-components'
 import Marker from './Marker'
@@ -8,7 +7,9 @@ import DetailPane from './Details/DetailPane'
 import SearchWrapper from './SearchWrapper'
 import { useLocation, useHistory } from 'react-router-dom'
 import Geocode from 'react-geocode'
-import { debug } from 'dotenv/lib/env-options';
+const greenMarker = require('../MainMap/FMM_icon_no_border.png')
+const redMarker = require('../MainMap/FMM_icon_no_border_favorites.png')
+
 require('dotenv/config');
 Geocode.setApiKey('AIzaSyC9D6rE1m0f2aAKVCYWfWoIuHNNRcr-dvE')
 
@@ -25,19 +26,17 @@ const WindowWrapper = styled.div`
 `
 
 const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
-    const history = useHistory();
     const [center, setCenter] = useState({lat: 39.741667, lng: -104.978649});
     const [lat, setLat] = useState(39.741667);
     const [lng, setLng] = useState(-104.978649);
     const [markets, setMarkets] = useState([]);
     const [zoom, setZoom] = useState(11);
     const [marks, setMarks] = useState([]);
-    const [currentMarker, setCurrentMarker] = useState();
+    const [favMarks, setFavMarks] = useState([]);
+    const [currentMarker, setCurrentMarkerId] = useState();
     const [currentMarket, setCurrentMarket] = useState();
     const [searchDate, setSearchDate] = useState('');
     const [searchProducts, setSearchProducts] = useState([]);
-    const [userToken, setUserToken] = useState()
-    const location = useLocation();
 
 
     useEffect(() => {
@@ -87,9 +86,12 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
             const { latitude, longitude, fmid, id } = market;
             return (
                 <Marker 
+                    key={fmid}
                     id={id}
                     lat={latitude}
                     lng={longitude}
+                    zIndex={1}
+                    img={greenMarker}
                     onClick={() => {
                         handleMarkerClick(id)
                     }}
@@ -98,6 +100,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
         });
         setMarks(newMarks);
     }, [markets]);
+
 
     useEffect(() => {
         axios.post("http://localhost:4000/", {
@@ -134,7 +137,11 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     }, [currentMarker]);
 
     const handleMarkerClick = ((data) => {
-        setCurrentMarker(data)
+        setCurrentMarkerId(data)
+    })
+
+    const handleFavMarkerClick = ((data) => {
+        setCurrentMarkerId(data)
     })
 
     const _onChange = ((data) => {
@@ -178,6 +185,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
                 onChange={_onChange}
                 onChildClick={_onChildClick}
                 >
+                    {favMarks}
                     {marks}
                 </GoogleMap>
             </MapWrapper>
