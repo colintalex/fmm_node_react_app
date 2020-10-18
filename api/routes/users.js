@@ -100,7 +100,7 @@ router.post('/:id/favorites/:market_fmid', auth, (req, res, next) => {
             res.json({
               user: {
                 id: savedUser._id,
-                user_name: savedUser.savedUser_name,
+                user_name: savedUser.user_name,
                 email: savedUser.email,
                 favorites: savedUser.favorites
               }, token: token
@@ -153,7 +153,7 @@ router.delete('/:id/favorites/:fav_id', auth, (req, res, next) => {
             res.json({
               user: {
                 id: savedUser._id,
-                user_name: savedUser.savedUser_name,
+                user_name: savedUser.user_name,
                 email: savedUser.email,
                 favorites: savedUser.favorites
               }, token: token

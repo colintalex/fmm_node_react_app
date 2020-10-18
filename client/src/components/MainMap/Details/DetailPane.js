@@ -33,10 +33,6 @@ const FavDiv = styled.div`
 // NOTE-- Add custom icons for types of products
 
 const DetailPane = (({ currentMarket, currentUser, handleUserFavorites, handleUser }) => {
-    const detailUser = currentUser
-    const _onSubmit = ((data) => {
-      
-    })
 
     return (
         <DetailWrapper>
