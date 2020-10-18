@@ -4,7 +4,8 @@
   "description": "Node.js/Express using MongoDB as a backend pointing to a React client app.\r Attempting to recreate final project, Find My Market, in new languages with hopes for faster db queries.",
   "main": "index.js",
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "http-errors": "^1.8.0"
   },
   "devDependencies": {},
   "scripts": {
