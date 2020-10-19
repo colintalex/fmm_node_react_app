@@ -84,7 +84,7 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     const history = useHistory();
 
 
-    const testProducts = [{name: []}, {name: ['apples']}, {name: 'oranges'}, {name: 'bananas'}]
+    const testProducts = [{name: ''},{name: 'Organic'},{name: 'Bakedgoods'},{name: 'Cheese'},{name: 'Crafts'},{name: 'Flowers'},{name: 'Eggs'},{name: 'Seafood'},{name: 'Herbs'},{name: 'Vegetables'},{name: 'Honey'},{name: 'Jams'},{name: 'Maple'},{name: 'Meat'},{name: 'Nursery'},{name: 'Nuts'},{name: 'Plants'},{name: 'Poultry'},{name: 'Prepared'},{name: 'Soap'},{name: 'Trees'},{name: 'Wine'},{name: 'Coffee'},{name: 'Beans'},{name: 'Fruits'},{name: 'Grains'},{name: 'Juices'},{name: 'Mushrooms'},{name: 'PetFood'},{name: 'Tofu'},{name: 'WildHarvested'}]
     const testDates = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     const productsMenu = testProducts.map(product => {
@@ -100,7 +100,7 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
     return(
         <StyledTopWrapper>
                 {currentUser.user && <StyledLogger onClick={() => handleUserLogging({action: 'logout'})}>Log Out</StyledLogger>}
-                {!currentUser.user && <StyledLogger onClick={() => history.push('/login')}>Log In</StyledLogger>}
+                {!currentUser.user && <StyledLogger onClick={() => history.push('/')}>Home</StyledLogger>}
             <SearchBar>
                 <form onSubmit={handleSubmit(handleSearch)}>
                     <StyledInput type='text' 

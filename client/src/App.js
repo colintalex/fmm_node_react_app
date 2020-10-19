@@ -98,7 +98,10 @@ const App = () => {
             />
           </Route>
           <Route exact path="/"> {/*Adding the exact path nullifies the default value route, but prevents displaying components that match route*/}
-            <Home />
+            <Home 
+              handleAuthentication={handleAuthentication}
+              currentUser={currentUser}
+            />
           </Route>
         </Switch>
   );
