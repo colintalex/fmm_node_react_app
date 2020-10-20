@@ -13,9 +13,11 @@ const StyledDetailPane = styled.div`
     width: 40vw;
     margin-left: auto;
     text-align: center;
+    padding: 20px;
     `
 
 const StyledMarketButton = styled.button`
+    display: inline-block;
     width: auto;
     height: 30px;
     opacity: 95%;
@@ -24,6 +26,18 @@ const StyledMarketButton = styled.button`
     background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
     border: 3px solid #38A3A5;
     border-radius: 20px;
+`
+const StyledTile = styled.div`
+    display: inline-block;
+    width: 90%;
+    height: auto;
+    margin: 10px auto;
+    justify-content: center;
+    background: rgb(203,104,93);
+    background: linear-gradient(180deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
+    border: 3px solid #38A3A5;
+    border-radius: 20px;
+    padding: 10px 10px 20px 10px;
 `
 
 const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) => {
@@ -51,10 +65,12 @@ const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) 
         })
     return (
         <StyledDetailPane>
-            <h3>{currentMarket.market.marketname} / {currentMarket.market.city}, {currentMarket.market.state}</h3>
-            <h4>{currentMarket.market.street}</h4>
-            <h5>{currentMarket.market.seasonDates}</h5>
-            <p>{products}</p>
+            <StyledTile>
+                <h3>{currentMarket.market.marketname} / {currentMarket.market.city}, {currentMarket.market.state}</h3>
+                <h4>{currentMarket.market.street}</h4>
+                <h5>{currentMarket.market.seasonDates}</h5>
+                <p>{products}</p>
+            </StyledTile>
             <StyledMarketButton href=''>Website</StyledMarketButton>
             { currentUser.user && favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'add',market: currentMarket.market, user: currentUser})}>Favorite</StyledMarketButton>}
             { currentUser.user && !favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'remove',market: currentMarket.market, user: currentUser})}>Un-Favorite</StyledMarketButton>}
