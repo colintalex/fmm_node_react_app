@@ -107,8 +107,8 @@ const ButtonWrapperStyle = styled.div`
 `
 
 const BannerStyled = styled.img`
-    width: 30vw;
-    margin-top: 11px;
+    height: 90px;
+    margin: 10px 0;
 `
 
 const InteractionBackground = styled.div`
