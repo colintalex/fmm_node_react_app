@@ -12,3 +12,5 @@ npm install
 npm start
 cd ../
 ```
+
+Updated README coming soon!
