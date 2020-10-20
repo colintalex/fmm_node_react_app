@@ -33,7 +33,7 @@ server.on('listening', onListening);
 
 //
 // Connect to DB -imported mongoose and copied over driver based link
-mongoose.connect('mongodb+srv://coloniusrex:Colonius64@cluster0.dc4uo.mongodb.net/Cluster0?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://coloniusrex:Colonius64@cluster0.dc4uo.mongodb.net/Cluster0?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Pending connection, will notify on success or failure
 const db = mongoose.connection;

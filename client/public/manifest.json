@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "FindMyMarket Web App",
+  "name": "FindMyMarket Production Web-Only Application",
   "icons": [
     {
       "src": "favicon.ico",
