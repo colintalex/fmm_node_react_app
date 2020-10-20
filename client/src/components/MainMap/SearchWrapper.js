@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-
+import Select from 'react-select'
 
 const SearchBar = styled.div`
     position: fixed;
@@ -16,20 +16,38 @@ const SearchBar = styled.div`
     z-index: 2;
     margin: 15px auto;
     align-content: center;
+
+    .basic-multi-select {
+        display: inline-block;
+        width: 30%;
+        padding-left: 5px;
+        height: 25px;
+    }
+
+    .select__control {
+        background-color: hsl(181deg 49% 47%);
+        font-size: 20px;
+        opacity: 95%;
+        background-color: #38A3A5 !important;
+        border-radius: 20px;
+        color: #fff;
+        outline: none !important;
+    }
 `
 
 const StyledInput = styled.input`
     display: inline-block;
-    width: 20%;
-    font-size: 20px;
+    width: 30%;
+    font-size: 21px;
     opacity: 95%;
-    height: 25px;
+    height: 36px;
     background-color: #38A3A5 !important;
     border-radius: 20px;
     color: #fff;
     outline: none !important;
-    padding-left: 15px;
-
+    padding: 0 0 0 15px;
+    border: 1px solid #38A3A5;
+    border-color: hsl(0,0%,80%);
 `
 
 const StyledSelect = styled.select`
@@ -37,13 +55,15 @@ const StyledSelect = styled.select`
     width: 20%;
     font-size: 20px;
     opacity: 95%;
-    height: 30px;
+    height: 36px;
     background-color: #38A3A5 !important;
     border-radius: 20px;
     color: #fff;
     outline: none !important;
     padding-left: 15px;
     margin-left: 5px;
+    border: 1px solid #38A3A5;
+    border-color: hsl(0,0%,80%);
 `
 
 const StyledSubmit = styled.button`
@@ -79,17 +99,21 @@ const StyledTopWrapper = styled.div`
     text-align: center;
 `
 
-const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
+
+const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch, setSearchProducts, location }) => {
     const { register, handleSubmit} = useForm();
     const history = useHistory();
 
 
-    const testProducts = [{name: ''},{name: 'Organic'},{name: 'Bakedgoods'},{name: 'Cheese'},{name: 'Crafts'},{name: 'Flowers'},{name: 'Eggs'},{name: 'Seafood'},{name: 'Herbs'},{name: 'Vegetables'},{name: 'Honey'},{name: 'Jams'},{name: 'Maple'},{name: 'Meat'},{name: 'Nursery'},{name: 'Nuts'},{name: 'Plants'},{name: 'Poultry'},{name: 'Prepared'},{name: 'Soap'},{name: 'Trees'},{name: 'Wine'},{name: 'Coffee'},{name: 'Beans'},{name: 'Fruits'},{name: 'Grains'},{name: 'Juices'},{name: 'Mushrooms'},{name: 'PetFood'},{name: 'Tofu'},{name: 'WildHarvested'}]
+    const testProducts = [{value: 'organic', label: 'organic', name: 'organic'},{value: 'bakedgoods', label: 'bakedgoods'},{value: 'cheese', label: 'cheese'},{value: 'crafts', label: 'crafts'},{value: 'flowers', label: 'flowers'},{value: 'eggs', label: 'eggs'},{value: 'seafood', label: 'seafood'},{value: 'herbs', label: 'herbs'},{value: 'vegetables', label: 'vegetables'},{value: 'honey', label: 'honey'},{value: 'jams', label: 'jams'},{value: 'maple', label: 'maple'},{value: 'meat', label: 'meat'},{value: 'nursery', label: 'nursery'},{value: 'nuts', label: 'nuts'},{value: 'plants', label: 'plants'},{value: 'poultry', label: 'poultry'},{value: 'prepared', label: 'prepared'},{value: 'soap', label: 'soap'},{value: 'trees', label: 'trees'},{value: 'wine', label: 'wine'},{value: 'coffee', label: 'coffee'},{value: 'beans', label: 'beans'},{value: 'fruits', label: 'fruits'},{value: 'grains', label: 'grains'},{value: 'juices', label: 'juices'},{value: 'mushrooms', label: 'mushrooms'},{value: 'petFood', label: 'petFood'},{value: 'tofu', label: 'tofu'},{value: 'wildHarvested', label: 'wildHarvested'}]
     const testDates = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
+    const testProductNames = testProducts.map(product => {
+        return product.name
+    })
     const productsMenu = testProducts.map(product => {
         return (
-            <option type='radio'>{product.name}</option>
+            <option>{product.name}</option>
         )
     })
     const datesMenu = testDates.map(date => {
@@ -97,6 +121,11 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
             <option >{date}</option>
         )
     })
+
+    const _setSearchProducts = (data) => {
+        if(data) setSearchProducts(data.map(x => {return x.label}))
+    }
+
     return(
         <StyledTopWrapper>
                 {currentUser.user && <StyledLogger onClick={() => handleUserLogging({action: 'logout'})}>Log Out</StyledLogger>}
@@ -104,33 +133,20 @@ const SearchWrapper = (({ currentUser, handleUserLogging, handleSearch }) => {
             <SearchBar>
                 <form onSubmit={handleSubmit(handleSearch)}>
                     <StyledInput type='text' 
-                        placeholder='Search by City, State' 
+                        placeholder={location}
                         ref={register}
                         name='location'   
                     ></StyledInput>
-                    <StyledSelect
-                        placeholder='Products'
-                        name='products' 
-                        ref={register}
-                    >
-                        {productsMenu}
-                    </StyledSelect>
-                    <StyledSelect
-                        placeholder='Start Date'
-                        name='start-date' 
-                        ref={register}
-                    >
-                        {datesMenu}
-                    </StyledSelect>
-                    <StyledSelect
-                        placeholder={'End Date'}
-                        name='end-date' 
-                        ref={register}
-                    >
-                        {datesMenu}
-                    </StyledSelect>
-                    <StyledSubmit type='submit'>Search</StyledSubmit>
+                    <StyledSubmit type='submit'>Go!</StyledSubmit>
                 </form>
+                    <Select
+                        options={testProducts}
+                        placeholder='Select Products to Live-Filter Results'
+                        isMulti
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(e) => _setSearchProducts(e) }
+                    />  
             </SearchBar>
         </StyledTopWrapper>
     )

@@ -37,6 +37,7 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     const [currentMarket, setCurrentMarket] = useState();
     const [searchDate, setSearchDate] = useState('');
     const [searchProducts, setSearchProducts] = useState([]);
+    const [location, setLocation] = useState('Denver, CO')
 
 
     useEffect(() => {
@@ -183,16 +184,13 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
     }
 
     const handleSearch = (data) => {
-        if(data.products.length > 0){
-            setSearchProducts([data.products])
-        }else{
-            setSearchProducts([])
-        }
+
         //data.start and end date translation
         Geocode.fromAddress(data.location)
         .then(resp => {
             setCenter(resp.results[0].geometry.location)
             setZoom(11);
+            setLocation(resp.results[0].formatted_address)
         })
         .catch(err => console.log('err', err))
     }
@@ -210,7 +208,9 @@ const MainMap = ({ currentUser, handleUserFavorites, handleUserLogging }) => {
                 <SearchWrapper 
                     handleSearch={handleSearch}
                     currentUser={currentUser}
+                    setSearchProducts={setSearchProducts}
                     handleUserLogging={handleUserLogging}
+                    location={location}
                 />
                 <GoogleMap
                 bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}

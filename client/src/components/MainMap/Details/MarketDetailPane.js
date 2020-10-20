@@ -41,12 +41,20 @@ const MarketDetailPane = (({ currentMarket, currentUser, handleUserFavorites }) 
         }
     }, [currentMarket, currentUser])
 
+
     if(currentMarket){
+
+        const products = currentMarket.market.products.map(product => {
+            return(
+                ` ${product.name.charAt(0).toUpperCase()}${product.name.slice(1)},`
+            )
+        })
     return (
         <StyledDetailPane>
             <h3>{currentMarket.market.marketname} / {currentMarket.market.city}, {currentMarket.market.state}</h3>
             <h4>{currentMarket.market.street}</h4>
             <h5>{currentMarket.market.seasonDates}</h5>
+            <p>{products}</p>
             <StyledMarketButton href=''>Website</StyledMarketButton>
             { currentUser.user && favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'add',market: currentMarket.market, user: currentUser})}>Favorite</StyledMarketButton>}
             { currentUser.user && !favoriteDisplay && <StyledMarketButton onClick={() => handleUserFavorites({action: 'remove',market: currentMarket.market, user: currentUser})}>Un-Favorite</StyledMarketButton>}
