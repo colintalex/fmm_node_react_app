@@ -7,7 +7,8 @@ import MarketDetailPane from './MarketDetailPane'
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    height: 20vh;
+    min-height: 20vh;
+    height: auto;
     padding-bottom: 50px;
     background: rgb(203,104,93);
     background: linear-gradient(177deg, rgba(203,104,93,1) 0%, rgba(239,130,117,1) 100%);
