@@ -13,4 +13,4 @@ npm start
 cd ../
 ```
 
-![Landing Page](/client/public/readme_images/Screen Shot 2021-01-04 at 4.36.58 PM.png)
+![Landing Page](/client/public/readme_images/image_1.png)
