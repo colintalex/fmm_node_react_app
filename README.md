@@ -12,6 +12,6 @@ npm install
 npm start
 cd ../
 ```
-<img src="/client/public/readme_images/image_1.png" alt="drawing" width="500"/>
-<img src="/client/public/readme_images/image_2.png" alt="drawing" width="500"/>
-<img src="/client/public/readme_images/image_3.png" alt="drawing" width="500"/>
+<img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
+<img src="/client/public/readme_images/image_2.png" alt="drawing" width="800"/>
+<img src="/client/public/readme_images/image_3.png" alt="drawing" width="800"/>
