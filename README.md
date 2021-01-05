@@ -18,6 +18,6 @@ npm start
 ```
 
 
-<img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
+<img src="/client/public/readme_images/image_1.png" alt="drawing" width="800" style="margin:auto;"/>
 <img src="/client/public/readme_images/image_2.png" alt="drawing" width="800"/>
 <img src="/client/public/readme_images/image_3.png" alt="drawing" width="800"/>
