@@ -12,7 +12,4 @@ npm install
 npm start
 cd ../
 ```
-
-![Landing Page](/client/public/readme_images/image_1.png)
-![Landing Page](/client/public/readme_images/image_2.png)
-![Landing Page](/client/public/readme_images/image_3.png)
+<img src="/client/public/readme_images/image_1.png" alt="drawing" width="200"/>
