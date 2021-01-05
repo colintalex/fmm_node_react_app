@@ -45,13 +45,13 @@ npm start
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="">
-    <img src="/client/public/readme_images/image_1.png" alt="drawing" width="250"/>
+    <img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
   </a>
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="_blank">
-    <img src="/client/public/readme_images/image_2.png" alt="drawing" width="250"/>
+    <img src="/client/public/readme_images/image_2.png" alt="drawing" width="800"/>
   </a>
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="_blank">
-    <img src="/client/public/readme_images/image_3.png" alt="drawing" width="250"/>
+    <img src="/client/public/readme_images/image_3.png" alt="drawing" width="800"/>
   </a>
 </p>
 
