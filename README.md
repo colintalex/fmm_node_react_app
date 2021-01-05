@@ -32,14 +32,16 @@ The FindMymarket model has been super enjoyable since first conceived for the sc
 Install
 ```
 clone directory
+
 cd api
 npm install
 npm start
+
+new tab
 cd ../client
 npm install
 npm start
 ```
-
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="">
@@ -52,3 +54,4 @@ npm start
     <img src="/client/public/readme_images/image_3.png" alt="drawing" width="800"/>
   </a>
 </p>
+
