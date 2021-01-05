@@ -3,6 +3,12 @@
 #### Node.js/Express using MongoDB as a backend that points to a ReactJS client-side app utilizing embedded Google Maps.
 A recreation of final project at Turing School, Find My Market, in new languages with hopes of making even faster queries. 
 
+<p align="center">
+  <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="">
+    <img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
+  </a>
+</p>
+
 #### What It's About 
 The ultimate goal of this web app to provide a one-stop shop for anyone looking for Farmers Markets in their area. Additionally, registered users can favorite a market to be saved for later reference. A zoom-to feature allows the registered user to quickly locate any favorites, while clicking on any market on the map provides a list categories that are available for purchage. All data is sourced from the USDA API and cleaned for quicker, more reliable results. 
 
@@ -44,9 +50,6 @@ npm start
 ```
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="">
-    <img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
-  </a>
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="_blank">
     <img src="/client/public/readme_images/image_2.png" alt="drawing" width="800"/>
   </a>
