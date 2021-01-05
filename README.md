@@ -1,18 +1,12 @@
 ## Find My Market - Web App
 
 #### Node.js/Express using MongoDB as a backend that points to a ReactJS client-side app utilizing embedded Google Maps.
-A recreation of final project at Turing School, Find My Market, in new languages with hopes of making even faster queries. 
-
-
-
 
 <p align="center" style="margin-top:15px">
   <a href="https://raw.githubusercontent.com/colintalex/fmm_node_react_app/readme/client/public/readme_images/image_1.png" target="">
     <img src="/client/public/readme_images/image_1.png" alt="drawing" width="800"/>
   </a>
 </p>
-
-
 
 
 #### What It's About 
