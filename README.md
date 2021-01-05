@@ -1,4 +1,6 @@
-Node.js/Express using MongoDB as a backend pointing to a React client app.
+##Find My MArket Web
+
+####Node.js/Express using MongoDB as a backend pointing to a ReactJS client-side app.
 Attempting to recreate final project, Find My Market, in new languages with hopes for faster db queries. 
 
 The FindMymarket model has been super enjoyable, the datasets are large and the importance of efficiency is at a higher threshold. Perfect for practice.
