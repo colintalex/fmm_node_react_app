@@ -34,7 +34,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "cd api/ && npm install && node ./api/bin/www",
+    "start": "cd api/ && npm install && node ./bin/www",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
     "test": "mocha"
   },
