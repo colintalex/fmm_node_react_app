@@ -31,5 +31,4 @@
     "nodemon": "^2.0.4",
     "supertest": "^5.0.0"
   },
-  "proxy": "http://localhost:5000/"
 }

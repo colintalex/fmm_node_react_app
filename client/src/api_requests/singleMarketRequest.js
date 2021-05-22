@@ -6,7 +6,7 @@ export const getNearbyMarkets = params => {
     const [markets, setMarkets] = useState();
 
     useEffect(() => {
-        axios.post("http://localhost:5000/", {
+        axios.post("https://find-my-market-cta.herokuapp.com/", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
