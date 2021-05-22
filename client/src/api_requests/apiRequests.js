@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const useMarketsByCoords = ((lat, lng, searchProducts, searchDate) => {
-    axios.post("http://localhost:5000/", {
+    axios.post("https://usda-api-colin.herokuapp.com/", {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
