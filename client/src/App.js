@@ -20,7 +20,7 @@ const App = () => {
   }, [currentUser]);
 
   const handleAuthentication = (data) => {
-      axios.post('https://find-my-market-cta.herokuapp.com/auth', data)
+      axios.post('http://localhost:5000/auth', data)
       .then(res => {
       setCurrentUser(res.data)
       })
@@ -36,7 +36,7 @@ const App = () => {
             'Content-Type': 'application/json',
             'x-auth-token': data.user.token
         }
-        axios.post(`https://find-my-market-cta.herokuapp.com/users/${data.user.user.id}/favorites/${data.market.fmid}`, data.market, {headers: headers})
+        axios.post(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.fmid}`, data.market, {headers: headers})
         .then(res => {
           setCurrentUser(res.data)
         })
@@ -50,7 +50,7 @@ const App = () => {
           'Content-Type': 'application/json',
           'x-auth-token': data.user.token
         }
-        axios.delete(`https://find-my-market-cta.herokuapp.com/users/${data.user.user.id}/favorites/${data.market.fmid}`, {headers: headers})
+        axios.delete(`http://localhost:5000/users/${data.user.user.id}/favorites/${data.market.fmid}`, {headers: headers})
         .then(res => {
           setCurrentUser(res.data)
         })
@@ -61,7 +61,7 @@ const App = () => {
     }
 
     const handleUserRegister = (data) => {
-      axios.post('https://find-my-market-cta.herokuapp.com/users/register', data)
+      axios.post('http://localhost:5000/users/register', data)
       .then((res) => {
           setCurrentUser(res.data)
       })
