@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const useMarketsByCoords = ((lat, lng, searchProducts, searchDate) => {
-    axios.post("https://find-my-market-cta.herokuapp.com/", {
+    axios.post("http://localhost:5000/", {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
