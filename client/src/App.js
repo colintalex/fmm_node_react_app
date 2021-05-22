@@ -20,7 +20,7 @@ const App = () => {
   }, [currentUser]);
 
   const handleAuthentication = (data) => {
-      axios.post('https://find-my-market-cta.herokuapp.com/', data)
+      axios.post('https://find-my-market-cta.herokuapp.com/auth', data)
       .then(res => {
       setCurrentUser(res.data)
       })
